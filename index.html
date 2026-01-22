@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <title>Hora da Pelada ⚽ Sorteio de Times, Placar e Cronômetro Online</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%2327ae60%22/><text y=%22.85em%22 x=%2250%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22>HP</text></svg>">
     <meta name="description" content="Organize sua pelada online: sorteio de times, placar, gols, vitórias e cronômetro. Ferramenta gratuita para futebol entre amigos, sem cadastro.">
     <meta name="keywords" content="hora da pelada, sorteio de times, pelada online, futebol entre amigos, placar de futebol, cronômetro de jogo, campeonato amador">
     <meta name="author" content="Hora da Pelada">
@@ -257,4 +258,5 @@
     function upd(){ tempoTotal = Date.now() - startTime; let m = Math.floor(tempoTotal / 60000), s = Math.floor((tempoTotal % 60000) / 1000), ms = Math.floor((tempoTotal % 1000) / 10); document.getElementById('display').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}:${ms.toString().padStart(2,'0')}`; }
 </script>
 </body>
+
 </html>
