@@ -3,260 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
-    <title>Hora da Pelada ⚽ Sorteio de Times, Placar e Cronômetro Online</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%2327ae60%22/><text y=%22.85em%22 x=%2250%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22>HP</text></svg>">
-    <meta name="description" content="Organize sua pelada online: sorteio de times, placar, gols, vitórias e cronômetro. Ferramenta gratuita para futebol entre amigos, sem cadastro.">
-    <meta name="keywords" content="hora da pelada, sorteio de times, pelada online, futebol entre amigos, placar de futebol, cronômetro de jogo, campeonato amador">
-    <meta name="author" content="Hora da Pelada">
-    <meta name="theme-color" content="#27ae60">
-    
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://adrianss14.github.io/horadapelada/">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Hora da Pelada",
-      "url": "https://adrianss14.github.io/horadapelada/",
-      "applicationCategory": "SportsApplication",
-      "operatingSystem": "All",
-      "description": "Ferramenta gratuita para organizar peladas, sortear times, marcar gols, controlar placar e cronômetro.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "BRL"
-      }
-    }
-    </script>
-
+    <title>Hora da Pelada ⚽ Sorteio de Times e Placar</title>
     <style>
-        :root { --v: #27ae60; --r: #e74c3c; --d: #2c3e50; --y: #fffde7; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; margin: 0; display: flex; justify-content: center; }
+        :root { --v: #27ae60; --d: #2c3e50; --r: #e74c3c; --f: #f0f2f5; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--f); margin: 0; display: flex; justify-content: center; overflow-x: hidden; }
         
-        .box { width: 100%; max-width: 440px; background: #fff; padding: 20px; min-height: 100vh; position: relative; box-shadow: 0 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .box { width: 100%; max-width: 440px; background: #fff; min-height: 100vh; position: relative; box-shadow: 0 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; padding: 20px; box-sizing: border-box; }
         
-        .logo-container { width: 100%; max-width: 280px; height: auto; margin: 10px 0; }
-        .logo-container svg { width: 100%; height: auto; display: block; }
+        /* Cabeçalho */
+        .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .logo-icon { width: 40px; height: 40px; background: var(--v); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; }
+        .logo-text b { display: block; font-size: 18px; color: var(--v); line-height: 1; }
+        .logo-text span { font-size: 22px; font-weight: bold; color: #111; }
 
-        .menu-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; z-index: 110; }
+        .menu-btn { background: none; border: none; cursor: pointer; padding: 5px; z-index: 1001; }
         .menu-btn div { width: 25px; height: 3px; background: var(--d); margin: 4px 0; border-radius: 2px; }
-        .side { position: fixed; top: 0; right: -280px; width: 260px; height: 100%; background: var(--d); color: #fff; transition: .3s; z-index: 120; padding: 25px; box-sizing: border-box; }
-        .side.open { right: 0; }
-        .side a { display: block; color: #fff; padding: 15px 0; text-decoration: none; border-bottom: 1px solid #444; font-weight: bold; cursor: pointer; }
 
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 115; }
-        .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; max-width: 360px; background: white; padding: 25px; border-radius: 12px; z-index: 160; max-height: 80vh; overflow-y: auto; color: #333; }
-        .modal h2, .modal h3, .modal h4 { color: var(--d); margin-top: 15px; margin-bottom: 10px; }
-        .modal p { font-size: 0.95rem; line-height: 1.5; color: #444; }
-        .close-modal { background: var(--v); color: white; border: none; padding: 14px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        /* Estilos do Menu Lateral */
+        .sidebar { position: fixed; top: 0; right: -100%; width: 280px; height: 100%; background: #fff; box-shadow: -5px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.4s; padding: 60px 20px; box-sizing: border-box; }
+        .sidebar.active { right: 0; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar li { padding: 15px 0; border-bottom: 1px solid #eee; font-weight: bold; color: var(--d); cursor: pointer; }
+        .sidebar li:hover { color: var(--v); }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 999; }
 
-        .tabs { display: flex; gap: 5px; margin: 15px 0; }
-        .tab-btn { flex: 1; padding: 12px; border: none; background: #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        /* Páginas de Texto */
+        .page-content { display: none; line-height: 1.6; font-size: 14px; color: #333; }
+        .page-content.active { display: block; }
+        .page-content h2 { color: var(--v); border-bottom: 2px solid var(--v); padding-bottom: 5px; margin-top: 0; }
+
+        .intro-text { font-size: 13px; color: #666; margin-bottom: 20px; line-height: 1.4; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+
+        /* Abas */
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 12px; border: none; background: #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; color: #444; }
         .tab-btn.active { background: var(--v); color: white; }
 
-        textarea { width: 100%; height: 80px; border-radius: 8px; border: 1px solid #ccc; padding: 10px; box-sizing: border-box; font-size: 14px; margin-bottom: 5px; resize: none; }
-        .camp-team-block { background: #f9f9f9; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #eee; position: relative; }
-        .remove-team { position: absolute; top: 5px; right: 10px; color: var(--r); cursor: pointer; font-weight: bold; font-size: 12px; }
-        input.team-name-input { width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 5px; font-weight: bold; box-sizing: border-box; }
+        /* Conteúdo */
+        textarea { width: 100%; height: 100px; border-radius: 8px; border: 1px solid #ccc; padding: 12px; box-sizing: border-box; font-size: 14px; resize: none; margin-bottom: 10px; }
+        .input-group { margin-bottom: 20px; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+        .input-group input { width: 60px; padding: 8px; border: 1px solid #ccc; border-radius: 6px; }
 
-        .btn-verde { background: var(--v); color: #fff; width: 100%; padding: 18px; font-size: 18px; border:none; border-radius:8px; font-weight:bold; cursor:pointer; }
-        
-        .cron { background: #1a1a1a; color: #0f0; padding: 15px; border-radius: 12px; text-align: center; }
+        .btn-principal { background: var(--v); color: white; width: 100%; padding: 18px; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-bottom: 15px; }
+        .btn-add { background: #eee; border: 1px dashed #999; color: #666; padding: 10px; border-radius: 8px; width: 100%; margin-bottom: 15px; cursor: pointer; font-weight: bold; }
+
+        /* Estilo das seções de AJUDA (Informações) */
+        .help-section { background: #fff; border-radius: 10px; margin-top: 10px; }
+        .help-title { font-size: 18px; font-weight: bold; color: var(--d); margin: 20px 0 10px 0; display: flex; align-items: center; gap: 8px; }
+        .help-card { background: #f9f9f9; border-left: 4px solid var(--v); padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .help-card b { color: var(--v); display: block; margin-bottom: 5px; font-size: 15px; }
+        .help-card p, .help-card li { font-size: 13px; color: #444; margin: 5px 0; line-height: 1.5; padding-left: 10px; }
+        .help-card ul { margin: 0; padding: 0; list-style: none; }
+
+        /* Rodapé */
+        .footer-info { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 20px; font-size: 13px; color: #666; }
+
+        /* Jogo e Placar */
+        .cron { background: #1a1a1a; color: #0f0; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
         .t-card { border: 1px solid #ddd; border-radius: 12px; margin-bottom: 15px; overflow: hidden; background: #fff; }
-        .t-h { background: #f8f9fa; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; font-weight: bold; }
-        .j-i { display: flex; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid #f1f1f1; align-items: center; }
-        
-        .cnt-group { display: flex; align-items: center; gap: 5px; }
-        .btn-c { background: #f1f1f1; border: 1px solid #ccc; width: 30px; height: 30px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .pts { min-width: 20px; text-align: center; font-weight: bold; }
-        .label-pts { font-size: 10px; color: #777; text-transform: uppercase; font-weight: bold; }
+        .t-h { background: #f8f9fa; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+        .j-i { display: flex; justify-content: space-between; padding: 8px 15px; border-top: 1px solid #f0f0f0; align-items: center; }
+        .cnt-group { display: flex; align-items: center; gap: 8px; }
+        .btn-c { background: #f1f1f1; border: 1px solid #ccc; width: 30px; height: 30px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .pts { min-width: 25px; text-align: center; font-weight: bold; }
 
-        .footer-links { margin-top: auto; padding: 20px 0; text-align: center; font-size: 13px; color: #888; border-top: 1px solid #eee; line-height: 1.6; }
-        .footer-links span { cursor: pointer; }
+        footer { margin-top: auto; padding: 20px 0; text-align: center; font-size: 12px; color: #888; border-top: 1px solid #eee; }
+        footer span { cursor: pointer; text-decoration: underline; }
     </style>
 </head>
 <body>
 
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<nav class="sidebar" id="sidebar">
+    <ul>
+        <li onclick="goHome()">🏠 Início</li>
+        <li onclick="showPage('pageSobre')">ℹ️ Sobre Nós</li>
+        <li onclick="showPage('pagePrivacidade')">🔒 Política de Privacidade</li>
+        <li onclick="showPage('pageContato')">📧 Contato</li>
+    </ul>
+</nav>
+
 <div class="box">
-    <button class="menu-btn" onclick="tglM()"><div></div><div></div><div></div></button>
-
-    <nav class="side" id="menu">
-        <h3 onclick="tglM()" style="cursor:pointer; border-bottom:1px solid #444; padding-bottom:10px;">✕ FECHAR</h3>
-        <a onclick="location.reload()">🔄 Reiniciar App</a>
-        <a onclick="openM('sobre')">ℹ️ Sobre</a>
-        <a onclick="openM('privacidade')">🔒 Privacidade</a>
-        <a onclick="openM('contato')">📧 Contato</a>
-    </nav>
-
-    <div class="overlay" id="overlay" onclick="closeM()"></div>
-    
-    <div class="logo-container">
-        <h1 style="margin:0">
-            <svg width="320" height="90" viewBox="0 0 320 90" xmlns="http://www.w3.org/2000/svg">
-              <rect x="10" y="15" width="60" height="60" rx="14" fill="#0E7C3A"/>
-              <circle cx="40" cy="45" r="18" fill="#FFFFFF"/>
-              <path d="M40 27 L46 34 L43 45 L37 45 L34 34 Z" fill="#0E7C3A"/>
-              <line x1="40" y1="27" x2="40" y2="18" stroke="#FFFFFF" stroke-width="2"/>
-              <line x1="40" y1="63" x2="40" y2="72" stroke="#FFFFFF" stroke-width="2"/>
-              <text x="90" y="42" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="bold" fill="#0E7C3A">Hora da</text>
-              <text x="90" y="70" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="bold" fill="#111">Pelada</text>
-            </svg>
-        </h1>
+    <div class="header-top">
+        <div class="logo" onclick="goHome()">
+            <div class="logo-icon">⚽</div>
+            <div class="logo-text"><b>Hora da</b><span>Pelada</span></div>
+        </div>
+        <button class="menu-btn" onclick="toggleMenu()"><div></div><div></div><div></div></button>
     </div>
 
-    <p style="font-size:14px; color:#666; margin-top: 0px; line-height: 1.4;">
-        Organize sua pelada em poucos segundos: sorteie times, marque gols, controle o tempo do jogo e também faça campeonatos.
-    </p>
+    <div id="mainUI" class="page-content active">
+        <div id="intro" class="intro-text">
+            Organize sua pelada em poucos segundos: sorteie times, marque gols e acompanhe o campeonato.
+        </div>
 
-    <h2 style="font-size:14px; color:#666; font-weight:normal; margin-top: -5px; margin-bottom: 15px;">
-        Sorteio de times de futebol online • Placar de pelada • Cronômetro de jogo
-    </h2>
-
-    <div id="setup">
         <div class="tabs">
-            <button id="tabS" class="tab-btn active" onclick="selMode('S')">Sorteio</button>
-            <button id="tabC" class="tab-btn" onclick="selMode('C')">Campeonato</button>
+            <button id="tabS" class="tab-btn active" onclick="selTab('S')">Sorteio</button>
+            <button id="tabC" class="tab-btn" onclick="selTab('C')">Campeonato</button>
+            <button id="tabA" class="tab-btn" onclick="selTab('A')">Ajuda</button>
         </div>
 
         <div id="areaS">
-            <textarea id="nomes" placeholder="Cole a lista de jogadores aqui..."></textarea>
-            <div style="margin-bottom:15px;"><b>Jogadores por Time:</b> <input type="number" id="qtd" value="4" style="width:50px; padding:8px; border-radius:5px; border:1px solid #ccc;"></div>
-            <button class="btn-verde" onclick="gerarSorteio()">SORTEAR PELADA</button>
+            <textarea id="nomes" placeholder="Cole a lista de jogadores aqui um abaixo do outro..."></textarea>
+            <div class="input-group">Jogadores por Time: <input type="number" id="qtd" value="4"></div>
+            <button class="btn-principal" onclick="gerarSorteio()">SORTEAR PELADA</button>
+
+            <div class="footer-info">
+                <b>O que é o Hora da Pelada?</b><br>
+                Ferramenta gratuita para organizar seu futebol. Sorteie times equilibrados, controle o placar e o tempo do jogo.
+            </div>
         </div>
 
         <div id="areaC" style="display:none">
-            <div id="camp-teams-container">
-                <div class="camp-team-block"><input type="text" class="team-name-input" value="Time 1"><textarea class="team-players-input" placeholder="Jogadores deste time..."></textarea></div>
-                <div class="camp-team-block"><input type="text" class="team-name-input" value="Time 2"><textarea class="team-players-input" placeholder="Jogadores deste time..."></textarea></div>
+            <div id="lista-times-input">
+                <div class="team-input-block" style="margin-bottom:15px;">
+                    <input type="text" placeholder="Nome do Time" class="t-name" value="Time 1" style="width:100%; padding:8px; margin-bottom:5px; border-radius:5px; border:1px solid #ccc; font-weight:bold;">
+                    <textarea class="t-players" placeholder="Lista de jogadores..."></textarea>
+                </div>
+                <div class="team-input-block" style="margin-bottom:15px;">
+                    <input type="text" placeholder="Nome do Time" class="t-name" value="Time 2" style="width:100%; padding:8px; margin-bottom:5px; border-radius:5px; border:1px solid #ccc; font-weight:bold;">
+                    <textarea class="t-players" placeholder="Lista de jogadores..."></textarea>
+                </div>
             </div>
-            <button onclick="addCampTeam()" style="width:100%; background:#eee; padding:12px; border-radius:8px; border:1px dashed #999; margin-bottom:10px; cursor:pointer; font-weight:bold;">+ ADICIONAR OUTRO TIME</button>
-            <button class="btn-verde" onclick="gerarCampeonato()" style="background:var(--d)">INICIAR CAMPEONATO</button>
+            <button class="btn-add" onclick="addTimeInput()">+ ADICIONAR OUTRO TIME</button>
+            <button class="btn-principal" onclick="iniciarCampeonato()">INICIAR CAMPEONATO</button>
+        </div>
+
+        <div id="areaA" style="display:none">
+            <div class="help-title">📋 Como Organizar uma Pelada</div>
+            <div class="help-card">
+                <b>1️⃣ Chama a galera</b>
+                <p>Define quantas pessoas (ex: 10, 12, 14). Cria um grupo no WhatsApp e confirma quem realmente vai.</p>
+            </div>
+            <div class="help-card">
+                <b>2️⃣ Define dia, hora e local</b>
+                <p>Escolhe um horário que funcione pra maioria. Reserva o campo (society, futsal, campo ou terrão). Confira a iluminação.</p>
+            </div>
+            <div class="help-card">
+                <b>3️⃣ Organiza os times</b>
+                <p>Use o Hora da Pelada para deixar tudo equilibrado e rápido. Você ainda pode cronometrar as partidas!</p>
+            </div>
+            <div class="help-card">
+                <b>4️⃣ Regras básicas</b>
+                <ul>
+                    <li>• Tempo de jogo (ex: 10 ou 15 min).</li>
+                    <li>• Falta com ou sem carrinho.</li>
+                    <li>• Gol só dentro da área (se for society).</li>
+                </ul>
+            </div>
+            <div class="help-card">
+                <b>6️⃣ Vaquinha 💰</b>
+                <p>Divide o valor do campo. Quem faltar sem avisar... paga mesmo assim (lei da pelada 😎).</p>
+            </div>
+            <div class="help-title">⚽ Regras por Modalidade</div>
+            <div class="help-card">
+                <b>Futebol</b>
+                <p>11 por time | 2 tempos de 45 min | Bola menor | Com impedimento | Lateral com as mãos .</p>
+            </div>
+            <div class="help-card">
+                <b>Futsal</b>
+                <p>5 por time | 2 tempos de 20 min | Bola menor | Sem impedimento | Lateral com os pés.</p>
+            </div>
+            <div class="help-card">
+                <b>Futebol Society</b>
+                <p>7 por time | Grama sintética | Ilimitadas substituições | Lateral com os pés.</p>
+            </div>
         </div>
     </div>
 
-    <div id="jogo" style="display:none;">
+    <div id="pageSobre" class="page-content">
+        <h2>Sobre Nós</h2>
+        <p><b>Bem-vindo ao Hora da Pelada</b></p>
+        <p>O Hora da Pelada nasceu da paixão pelo futebol e da necessidade de organizar o esporte mais popular do Brasil de forma inteligente e prática. Em um mundo cada vez mais digital, acreditamos que o esporte presencial é essencial para a saúde e a conexão social, e achamos que a tecnologia pode contribuir com isso.</p>
+        <button class="btn-principal" onclick="goHome()" style="background:#888;">VOLTAR</button>
+    </div>
+
+    <div id="pagePrivacidade" class="page-content">
+        <h2>Política de Privacidade</h2>
+        <p>A sua privacidade é importante para nós. É política do Hora da Pelada respeitar a sua privacidade em relação a qualquer informação que possamos coletar no site.</p>
+        <p><b>1. Coleta de Informações</b><br>Solicitamos informações pessoais apenas quando realmente precisamos delas para lhe fornecer um serviço. Fazemo-lo por meios justos e legais, com o seu conhecimento e consentimento.</p>
+        <p><b>2. Uso de Dados e Cookies</b><br>Nosso site pode utilizar cookies para melhorar sua experiência de navegação. Esses dados são usados para entender como você interage com nosso conteúdo e para fins de análise técnica e de desempenho.</p>
+        <p><b>3. Segurança</b><br>Como estamos hospedados em ambiente seguro utilizamos tecnologias padrão de mercado para proteger seus dados contra acessos não autorizados. Não compartilhamos informações de identificação pessoal publicamente ou com terceiros, exceto quando exigido por lei.</p>
+        <p><b>4. Direitos do Usuário</b><br>Você é livre para recusar a nossa solicitação de informações pessoais, entendendo que talvez não possamos fornecer alguns dos serviços desejados.</p>
+        <p>Última atualização: Janeiro de 2026.</p>
+        <button class="btn-principal" onclick="goHome()" style="background:#888;">VOLTAR</button>
+    </div>
+
+    <div id="pageContato" class="page-content">
+        <h2>Contato</h2>
+        <p>Se você tiver alguma dúvida sobre como lidamos com dados de usuários, entre em contato conosco:</p>
+        <div class="help-card">
+            <b>📧 E-mail:</b>
+            <p>contatohoradapelada@gmail.com</p>
+        </div>
+        <div class="help-card">
+            <b>📸 Instagram:</b>
+            <p><a href="https://www.instagram.com/horadapelada.br?igsh=MWwxdnJ0NHQxeWU5MQ==" target="_blank" style="color: var(--v); text-decoration: none;">@horadapelada.br</a></p>
+        </div>
+        <button class="btn-principal" onclick="goHome()" style="background:#888;">VOLTAR</button>
+    </div>
+
+    <div id="jogo" style="display:none">
         <div class="cron">
-            <div id="display" style="font-size:42px; font-family:monospace; margin-bottom:10px;">00:00:00</div>
-            <div style="display:flex; justify-content:center; gap:8px;">
-                <button id="btn-play" onclick="playPause()" class="btn-verde" style="margin:0; padding:10px 20px; font-size:14px; flex:1;">INICIAR</button>
-                <button onclick="resetar()" style="background:var(--r); color:#fff; padding:10px; border:none; border-radius:8px; font-weight:bold;">ZERAR</button>
+            <div id="display" style="font-size:40px; font-family:monospace;">00:00:00</div>
+            <div style="display:flex; gap:10px; margin-top:10px; justify-content:center;">
+                <button onclick="playPause()" id="btn-p" style="padding:10px 20px; border-radius:5px; border:none; background:var(--v); color:white; font-weight:bold;">INICIAR</button>
+                <button onclick="resetCron()" style="padding:10px 20px; border-radius:5px; border:none; background:var(--r); color:white; font-weight:bold;">ZERAR</button>
             </div>
         </div>
-        <div id="lista-times"></div>
-        <button onclick="location.reload()" style="width:100%; background:#ddd; padding:15px; font-weight:bold; margin-top:10px; border:none; border-radius:10px;">VOLTAR E EDITAR</button>
+        <div id="placar-area"></div>
+        <div id="hist-comp" style="margin-top:20px; background:#f9f9f9; padding:10px; border-radius:8px; display:none;">
+            <b>Histórico do Campeonato</b>
+            <div id="hist-lista" style="font-size:12px; margin-top:5px;"></div>
+        </div>
+        <button class="btn-principal" style="background:#888; margin-top:20px;" onclick="location.reload()">VOLTAR</button>
     </div>
 
-    <div style="padding:20px; font-size:14px; color:#555; line-height:1.6;">
-        <h3>O que é o Hora da Pelada?</h3>
-        <p>O Hora da Pelada é uma ferramenta online gratuita criada para facilitar a organização de jogos de futebol entre amigos. Com poucos cliques, você sorteia times, controla gols, vitórias e acompanha o tempo do jogo diretamente pelo celular.</p>
-    </div>
-
-    <div style="font-size:12px; color:#999; line-height:1.6; margin-top:20px;">
-        <p>
-            Hora da Pelada é um organizador de pelada online gratuito para sorteio de times de futebol,
-            controle de placar, gols, vitórias e tempo de jogo. Ideal para futebol entre amigos,
-            futsal, society e jogos amadores.
-        </p>
-    </div>
-
-    <div class="footer-links">
-        <span onclick="openM('sobre')">Sobre</span> • 
-        <span onclick="openM('privacidade')">Política de Privacidade</span> • 
-        <span onclick="openM('contato')">Contato</span>
-        <br><br>
-        © Hora da Pelada — Ferramenta gratuita para organizar jogos entre amigos.
-    </div>
-</div>
-
-<div class="modal" id="m-sobre">
-    <h2>Sobre o Hora da Pelada</h2>
-    <p>O Hora da Pelada surgiu pra acabar com aquela bagunça antes do jogo: discussão de time, confusão de quem joga com quem.</p>
-    <button class="close-modal" onclick="closeM()">Fechar</button>
-</div>
-
-<div class="modal" id="m-contato">
-    <h2>Contato</h2>
-    <p>E-mail:<br><strong>contatohoradapelada@gmail.com</strong></p>
-    <p>Instagram:<br><strong><a href="https://www.instagram.com/horadapelada.br" target="_blank" style="color:var(--d); text-decoration:none;">@horadapelada.br</a></strong></p>
-    <button class="close-modal" onclick="closeM()">Fechar</button>
-</div>
-
-<div class="modal" id="m-privacidade">
-    <h3>Política de Privacidade</h3>
-    <p>O <strong>Hora da Pelada</strong> é um site gratuito. Não solicitamos nem armazenamos informações pessoais.</p>
-    <p>Utilizamos cookies apenas para garantir a melhor experiência e anúncios relevantes via Google AdSense.</p>
-    <button class="close-modal" onclick="closeM()">Fechar</button>
-</div>
-
-<div id="cookieBox" style="position:fixed; bottom:0; left:0; width:100%; background:#2c3e50; color:#fff; padding:15px; font-size:14px; display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center; z-index:999;">
-    <span>Usamos cookies para melhorar sua experiência. Ao continuar, você concorda com nossa Política de Privacidade.</span>
-    <button onclick="aceitarCookies()" style="background:#27ae60; color:#fff; border:none; padding:8px 16px; border-radius:6px; font-weight:bold; cursor:pointer;">Aceitar</button>
+    <footer>
+        <span onclick="showPage('pageSobre')">Sobre</span> • 
+        <span onclick="showPage('pagePrivacidade')">Política de Privacidade</span> • 
+        <span onclick="showPage('pageContato')">Contato</span><br>
+        © Hora da Pelada — Organização rápida de futebol.
+    </footer>
 </div>
 
 <script>
-    function aceitarCookies(){ localStorage.setItem('cookiesAceitos', 'sim'); document.getElementById('cookieBox').style.display = 'none'; }
-    window.addEventListener('load', () => { if(localStorage.getItem('cookiesAceitos') === 'sim'){ document.getElementById('cookieBox').style.display = 'none'; } });
+    let tempo = 0, cron, rodando = false;
 
-    let tempoTotal = 0, interval = null, isRodando = false, startTime = 0;
-    
-    function tglM(){ 
-        const menu = document.getElementById('menu');
+    // Funções do Menu Lateral
+    function toggleMenu() {
+        const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
-        menu.classList.toggle('open');
-        overlay.style.display = menu.classList.contains('open') ? 'block' : 'none';
+        sidebar.classList.toggle('active');
+        overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
     }
 
-    function openM(id){ 
-        closeM();
-        document.getElementById('overlay').style.display = 'block'; 
-        document.getElementById('m-' + id).style.display = 'block'; 
-        document.getElementById('menu').classList.remove('open');
+    function showPage(pageId) {
+        document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+        document.getElementById('jogo').style.display = 'none';
+        document.getElementById(pageId).classList.add('active');
+        if(document.getElementById('sidebar').classList.contains('active')) toggleMenu();
+        window.scrollTo(0,0);
     }
 
-    function closeM(){ 
-        document.getElementById('overlay').style.display = 'none'; 
-        document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); 
-        document.getElementById('menu').classList.remove('open');
+    function goHome() {
+        showPage('mainUI');
+        selTab('S');
     }
 
-    function selMode(m){ document.getElementById('areaS').style.display = m=='S'?'block':'none'; document.getElementById('areaC').style.display = m=='C'?'block':'none'; document.getElementById('tabS').classList.toggle('active', m=='S'); document.getElementById('tabC').classList.toggle('active', m=='C'); }
-    function addCampTeam(){ const div = document.createElement('div'); div.className = 'camp-team-block'; div.innerHTML = `<span class="remove-team" onclick="this.parentElement.remove()">remover</span><input type="text" class="team-name-input" placeholder="Novo Time"><textarea class="team-players-input"></textarea>`; document.getElementById('camp-teams-container').appendChild(div); }
-    
-    function gerarSorteio(){
-        const nomes = document.getElementById('nomes').value.split('\n').filter(n => n.trim()).sort(() => Math.random() - 0.5);
-        if(nomes.length < 2) return alert("Insira os jogadores!");
-        const pTime = parseInt(document.getElementById('qtd').value) || 4;
+    // Suas Funções Originais
+    function selTab(t) {
+        document.getElementById('areaS').style.display = t=='S'?'block':'none';
+        document.getElementById('areaC').style.display = t=='C'?'block':'none';
+        document.getElementById('areaA').style.display = t=='A'?'block':'none';
+        document.getElementById('tabS').className = t=='S'?'tab-btn active':'tab-btn';
+        document.getElementById('tabC').className = t=='C'?'tab-btn active':'tab-btn';
+        document.getElementById('tabA').className = t=='A'?'tab-btn active':'tab-btn';
+    }
+
+    function addTimeInput() {
+        const div = document.createElement('div');
+        div.className = "team-input-block";
+        div.style.marginBottom = "15px";
+        div.innerHTML = `<input type="text" placeholder="Nome do Time" class="t-name" value="Time ${document.querySelectorAll('.t-name').length + 1}" style="width:100%; padding:8px; margin-bottom:5px; border-radius:5px; border:1px solid #ccc; font-weight:bold;">
+                         <textarea class="t-players" placeholder="Lista de jogadores..."></textarea>`;
+        document.getElementById('lista-times-input').appendChild(div);
+    }
+
+    function gerarSorteio() {
+        const txt = document.getElementById('nomes').value.split('\n').filter(n => n.trim()).sort(() => Math.random() - 0.5);
+        if(txt.length < 2) return alert("Adicione jogadores!");
+        const qtd = parseInt(document.getElementById('qtd').value);
         let html = "";
-        for(let i=0, t=1; i < nomes.length; i += pTime, t++){ html += renderCard("TIME " + t, nomes.slice(i, i + pTime)); }
+        for(let i=0, t=1; i < txt.length; i += qtd, t++) {
+            html += renderCard(`Time ${t}`, txt.slice(i, i + qtd));
+        }
         mostrarJogo(html);
     }
 
-    function gerarCampeonato(){
+    function iniciarCampeonato() {
         let html = "";
-        document.querySelectorAll('.camp-team-block').forEach(b => {
-            const name = b.querySelector('.team-name-input').value || "Time";
-            const players = b.querySelector('.team-players-input').value.split('\n').filter(n => n.trim());
-            html += renderCard(name, players);
+        document.querySelectorAll('.team-input-block').forEach(b => {
+            const nome = b.querySelector('.t-name').value;
+            const jogs = b.querySelector('.t-players').value.split('\n').filter(n => n.trim());
+            html += renderCard(nome, jogs);
         });
+        document.getElementById('hist-comp').style.display = 'block';
         mostrarJogo(html);
     }
 
-    function renderCard(titulo, jogadores){
-        let h = `<div class="t-card"><div class="t-h"><span>${titulo}</span><div class="cnt-group"><span class="label-pts">Vitórias</span><button class="btn-c" onclick="alt(this,-1)">-</button><b class="pts">0</b><button class="btn-c" onclick="alt(this,1)">+</button></div></div>`;
-        jogadores.forEach(p => h += `<div class="j-i"><span>${p}</span><div class="cnt-group"><span class="label-pts">Gols</span><button class="btn-c" onclick="alt(this,-1)">-</button><b class="pts">0</b><button class="btn-c" onclick="alt(this,1)">+</button></div></div>`);
-        return h + `</div>`;
+    function renderCard(titulo, jogs) {
+        let h = `<div class="t-card"><div class="t-h"><span>${titulo}</span><div class="cnt-group"><button class="btn-c" onclick="alt(this,-1)">-</button><b class="pts t-pts">0</b><button class="btn-c" onclick="alt(this,1)">+</button></div></div>`;
+        jogs.forEach(j => {
+            h += `<div class="j-i"><span>${j}</span><div class="cnt-group"><button class="btn-c" onclick="alt(this,-1,true)">-</button><b class="pts j-pts">0</b><button class="btn-c" onclick="alt(this,1,true)">+</button></div></div>`;
+        });
+        return h + "</div>";
     }
 
-    function alt(btn, v){ let pts = btn.parentElement.querySelector('.pts'); let n = parseInt(pts.innerText) + v; if(n >= 0) pts.innerText = n; }
-    function mostrarJogo(html){ document.getElementById('lista-times').innerHTML = html; document.getElementById('setup').style.display = 'none'; document.getElementById('jogo').style.display = 'block'; window.scrollTo(0,0); }
-    
-    function playPause(){ if(!isRodando){ isRodando = true; document.getElementById('btn-play').innerText = "PAUSAR"; startTime = Date.now() - tempoTotal; interval = setInterval(upd, 10); } else { isRodando = false; clearInterval(interval); document.getElementById('btn-play').innerText = "RETOMAR"; } }
-    function resetar(){ isRodando = false; clearInterval(interval); tempoTotal = 0; document.getElementById('display').innerText = "00:00:00"; document.getElementById('btn-play').innerText = "INICIAR"; }
-    function upd(){ tempoTotal = Date.now() - startTime; let m = Math.floor(tempoTotal / 60000), s = Math.floor((tempoTotal % 60000) / 1000), ms = Math.floor((tempoTotal % 1000) / 10); document.getElementById('display').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}:${ms.toString().padStart(2,'0')}`; }
+    function alt(btn, v, isJ) {
+        let p = btn.parentElement.querySelector('.pts');
+        let n = parseInt(p.innerText) + v;
+        if(n >= 0) {
+            p.innerText = n;
+            if(isJ) {
+                let card = btn.closest('.t-card'), total = 0;
+                card.querySelectorAll('.j-pts').forEach(s => total += parseInt(s.innerText));
+                card.querySelector('.t-pts').innerText = total;
+            }
+        }
+    }
+
+    function mostrarJogo(html) {
+        document.getElementById('placar-area').innerHTML = html;
+        document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+        document.getElementById('jogo').style.display = 'block';
+    }
+
+    function playPause() {
+        if(!rodando) {
+            rodando = true; document.getElementById('btn-p').innerText = "PAUSAR";
+            cron = setInterval(() => { tempo++; updDisplay(); }, 1000);
+        } else {
+            rodando = false; clearInterval(cron); document.getElementById('btn-p').innerText = "RETOMAR";
+        }
+    }
+
+    function resetCron() {
+        if(tempo > 0 && document.getElementById('hist-comp').style.display == 'block') {
+            const cards = document.querySelectorAll('.t-card');
+            if(cards.length >= 2) {
+                const log = `${cards[0].querySelector('span').innerText} ${cards[0].querySelector('.t-pts').innerText} x ${cards[1].querySelector('.t-pts').innerText} ${cards[1].querySelector('span').innerText}`;
+                const item = document.createElement('div');
+                item.innerText = `${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})} - ${log}`;
+                document.getElementById('hist-lista').prepend(item);
+            }
+        }
+        tempo = 0; clearInterval(cron); rodando = false; updDisplay();
+        document.getElementById('btn-p').innerText = "INICIAR";
+    }
+
+    function updDisplay() {
+        let h = Math.floor(tempo/3600), m = Math.floor((tempo%3600)/60), s = tempo%60;
+        document.getElementById('display').innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    }
 </script>
 </body>
-
 </html>
