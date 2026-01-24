@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hora da Pelada ⚽ Sorteio de Times e Placar</title>
+    <title>Hora da Pelada ⚽ Sorteio de Times, Cronômetro e Dicas de Futebol</title>
+    <meta name="description" content="Organizador de pelada online: sorteio de times equilibrados, placar, cronômetro e as melhores dicas para futebol society e futsal.">
+    <meta name="keywords" content="sorteio de times, organizar pelada, futebol society, regras futebol, cronometro futebol, app pelada">
+    
     <style>
         :root { --v: #27ae60; --d: #2c3e50; --r: #e74c3c; --f: #f0f2f5; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--f); margin: 0; display: flex; justify-content: center; overflow-x: hidden; }
@@ -12,15 +15,17 @@
         
         /* Cabeçalho */
         .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; }
         .logo-icon { width: 40px; height: 40px; background: var(--v); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; }
+        
+        h1.logo-text { margin: 0; display: block; font-size: 18px; color: var(--v); line-height: 1; font-weight: normal; }
         .logo-text b { display: block; font-size: 18px; color: var(--v); line-height: 1; }
         .logo-text span { font-size: 22px; font-weight: bold; color: #111; }
 
         .menu-btn { background: none; border: none; cursor: pointer; padding: 5px; z-index: 1001; }
         .menu-btn div { width: 25px; height: 3px; background: var(--d); margin: 4px 0; border-radius: 2px; }
 
-        /* Estilos do Menu Lateral */
+        /* Menu Lateral */
         .sidebar { position: fixed; top: 0; right: -100%; width: 280px; height: 100%; background: #fff; box-shadow: -5px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.4s; padding: 60px 20px; box-sizing: border-box; }
         .sidebar.active { right: 0; }
         .sidebar ul { list-style: none; padding: 0; }
@@ -28,27 +33,26 @@
         .sidebar li:hover { color: var(--v); }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 999; }
 
-        /* Páginas de Texto */
+        /* Conteúdo das Páginas */
         .page-content { display: none; line-height: 1.6; font-size: 14px; color: #333; }
         .page-content.active { display: block; }
         .page-content h2 { color: var(--v); border-bottom: 2px solid var(--v); padding-bottom: 5px; margin-top: 0; }
 
         .intro-text { font-size: 13px; color: #666; margin-bottom: 20px; line-height: 1.4; border-bottom: 1px solid #eee; padding-bottom: 15px; }
 
-        /* Abas */
+        /* Abas de Navegação */
         .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
         .tab-btn { flex: 1; padding: 12px; border: none; background: #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; color: #444; }
         .tab-btn.active { background: var(--v); color: white; }
 
-        /* Conteúdo */
-        textarea { width: 100%; height: 100px; border-radius: 8px; border: 1px solid #ccc; padding: 12px; box-sizing: border-box; font-size: 14px; resize: none; margin-bottom: 10px; }
+        /* Estilos de Inputs e Botões */
+        textarea { width: 100%; height: 100px; border-radius: 8px; border: 1px solid #ccc; padding: 12px; box-sizing: border-box; font-size: 14px; resize: none; margin-bottom: 10px; font-family: inherit; }
         .input-group { margin-bottom: 20px; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 10px; }
         .input-group input { width: 60px; padding: 8px; border: 1px solid #ccc; border-radius: 6px; }
 
         .btn-principal { background: var(--v); color: white; width: 100%; padding: 18px; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-bottom: 15px; }
         .btn-add { background: #eee; border: 1px dashed #999; color: #666; padding: 10px; border-radius: 8px; width: 100%; margin-bottom: 15px; cursor: pointer; font-weight: bold; }
 
-        /* Estilo das seções de AJUDA (Informações) */
         .help-section { background: #fff; border-radius: 10px; margin-top: 10px; }
         .help-title { font-size: 18px; font-weight: bold; color: var(--d); margin: 20px 0 10px 0; display: flex; align-items: center; gap: 8px; }
         .help-card { background: #f9f9f9; border-left: 4px solid var(--v); padding: 15px; border-radius: 8px; margin-bottom: 15px; }
@@ -56,14 +60,18 @@
         .help-card p, .help-card li { font-size: 13px; color: #444; margin: 5px 0; line-height: 1.5; padding-left: 10px; }
         .help-card ul { margin: 0; padding: 0; list-style: none; }
 
-        /* Estilos do Blog (Adicionado) */
-        .blog-post { margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
-        .blog-post h3 { color: var(--v); font-size: 18px; margin-bottom: 10px; margin-top: 0; }
-        .blog-post p, .blog-post li { font-size: 14px; color: #444; line-height: 1.6; margin-bottom: 10px; }
-        .blog-post b { color: #2c3e50; }
-        .blog-post ul { padding-left: 20px; }
+        /* Estilos Blog */
+        article.blog-post { margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px; display: block; }
+        article.blog-post h3 { color: var(--v); font-size: 20px; margin-bottom: 15px; margin-top: 0; }
+        article.blog-post h4 { color: var(--d); font-size: 16px; margin: 15px 0 5px 0; }
+        article.blog-post p { font-size: 15px; color: #444; line-height: 1.7; margin-bottom: 12px; text-align: justify; }
+        article.blog-post ul { padding-left: 20px; color: #444; margin-bottom: 15px; }
+        article.blog-post li { margin-bottom: 8px; line-height: 1.6; }
 
-        /* Rodapé */
+        .seo-content { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+        .seo-content h2 { font-size: 16px; color: var(--d); margin-bottom: 10px; }
+        .seo-content p { font-size: 13px; color: #666; line-height: 1.5; text-align: justify; }
+
         .footer-info { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 20px; font-size: 13px; color: #666; }
 
         /* Jogo e Placar */
@@ -86,7 +94,9 @@
 <nav class="sidebar" id="sidebar">
     <ul>
         <li onclick="goHome()">🏠 Início</li>
-        <li onclick="showPage('pageSobre')">ℹ️ Sobre Nós</li>
+        <li onclick="selTab('B'); toggleMenu();">📰 Blog & Dicas</li>
+        <li onclick="selTab('A'); toggleMenu();">☕ Pague um Café</li>
+        <li onclick="showPage('pageSobre')">ℹ️ Sobre o Projeto</li>
         <li onclick="showPage('pagePrivacidade')">🔒 Política de Privacidade</li>
         <li onclick="showPage('pageContato')">📧 Contato</li>
     </ul>
@@ -96,14 +106,14 @@
     <div class="header-top">
         <div class="logo" onclick="goHome()">
             <div class="logo-icon">⚽</div>
-            <div class="logo-text"><b>Hora da</b><span>Pelada</span></div>
+            <h1 class="logo-text"><b>Hora da</b><span>Pelada</span></h1>
         </div>
         <button class="menu-btn" onclick="toggleMenu()"><div></div><div></div><div></div></button>
     </div>
 
     <div id="mainUI" class="page-content active">
         <div id="intro" class="intro-text">
-            Organize sua pelada em poucos segundos: sorteie times, marque gols e acompanhe o campeonato.
+            Sua ferramenta definitiva para organizar a pelada: Sorteio de times, Cronômetro e Dicas de Futebol Society.
         </div>
 
         <div class="tabs">
@@ -114,169 +124,225 @@
         </div>
 
         <div id="areaS">
-            <textarea id="nomes" placeholder="Cole a lista de jogadores aqui um abaixo do outro..."></textarea>
+            <textarea id="nomes" placeholder="Cole a lista de jogadores aqui (um por linha)...&#10;Ex:&#10;João&#10;Pedro&#10;Lucas"></textarea>
             <div class="input-group">Jogadores por Time: <input type="number" id="qtd" value="4"></div>
-            <button class="btn-principal" onclick="gerarSorteio()">SORTEAR PELADA</button>
+            <button class="btn-principal" onclick="gerarSorteio()">SORTEAR TIMES AGORA</button>
 
             <div class="footer-info">
-                <b>O que é o Hora da Pelada?</b><br>
-                Ferramenta gratuita para organizar seu futebol. Sorteie times equilibrados, controle o placar e o tempo do jogo.
+                <b>Hora da Pelada: O Jeito Fácil de Jogar</b><br>
+                Nossa ferramenta utiliza um algoritmo randômico para criar equipes equilibradas instantaneamente. Perfeito para grupos de WhatsApp, society e futsal.
+            </div>
+
+            <div class="seo-content">
+                <h2>O fim das "panelinhas" no futebol</h2>
+                <p>Quem organiza futebol amador sabe: a hora de dividir os times é a mais tensa. O <strong>Hora da Pelada</strong> resolve isso com imparcialidade. Além de sortear, você gerencia o tempo e o placar em um só lugar.</p>
+                <p>Acesse nossa aba <strong>Blog</strong> para ler dicas exclusivas sobre como melhorar a organização do seu jogo, escolher a melhor chuteira e evitar lesões.</p>
             </div>
         </div>
 
         <div id="areaC" style="display:none">
             <div id="lista-times-input">
                 <div class="team-input-block" style="margin-bottom:15px;">
-                    <input type="text" placeholder="Nome do Time" class="t-name" value="Time 1" style="width:100%; padding:8px; margin-bottom:5px; border-radius:5px; border:1px solid #ccc; font-weight:bold;">
+                    <input type="text" placeholder="Nome do Time" class="t-name" value="Time A" style="width:100%; padding:8px; margin-bottom:5px; border-radius:5px; border:1px solid #ccc; font-weight:bold;">
                     <textarea class="t-players" placeholder="Lista de jogadores..."></textarea>
                 </div>
                 <div class="team-input-block" style="margin-bottom:15px;">
-                    <input type="text" placeholder="Nome do Time" class="t-name" value="Time 2" style="width:100%; padding:8px; margin-bottom:5px; border-radius:5px; border:1px solid #ccc; font-weight:bold;">
+                    <input type="text" placeholder="Nome do Time" class="t-name" value="Time B" style="width:100%; padding:8px; margin-bottom:5px; border-radius:5px; border:1px solid #ccc; font-weight:bold;">
                     <textarea class="t-players" placeholder="Lista de jogadores..."></textarea>
                 </div>
             </div>
-            <button class="btn-add" onclick="addTimeInput()">+ ADICIONAR OUTRO TIME</button>
-            <button class="btn-principal" onclick="iniciarCampeonato()">INICIAR CAMPEONATO</button>
+            <button class="btn-add" onclick="addTimeInput()">+ ADICIONAR TIME</button>
+            <button class="btn-principal" onclick="iniciarCampeonato()">COMEÇAR JOGO</button>
         </div>
 
         <div id="areaA" style="display:none">
-            <div class="help-title">📋 Como Organizar uma Pelada</div>
-            <div class="help-card">
-                <b>1️⃣ Chama a galera</b>
-                <p>Define quantas pessoas (ex: 10, 12, 14). Cria um grupo no WhatsApp e confirma quem realmente vai.</p>
+            <div class="help-title">☕ Apoie o Projeto</div>
+            <div class="help-card" style="border-left-color: #f1c40f; background: #fffdf0;">
+                <b>Pague um Café para o Desenvolvedor</b>
+                <p>Gostou da ferramenta? Ela é gratuita e sem anúncios invasivos. Você pode ajudar a manter o servidor online pagando um café!</p>
+                <p><b>Chave PIX (E-mail):</b><br>contatohoradapelada@gmail.com</p>
+                <p><i>Qualquer valor ajuda muito na evolução do site. Obrigado!</i></p>
             </div>
+
+            <div class="help-title">📋 Guia Rápido</div>
             <div class="help-card">
-                <b>2️⃣ Define dia, hora e local</b>
-                <p>Escolhe um horário que funcione pra maioria. Reserva o campo (society, futsal, campo ou terrão). Confira a iluminação.</p>
+                <b>Como usar o sorteador?</b>
+                <p>1. Copie a lista de nomes do seu grupo.</p>
+                <p>2. Cole na caixa de texto na aba "Sorteio".</p>
+                <p>3. Escolha quantos jogadores por time e clique em Sortear.</p>
             </div>
+            
+            <div class="help-title">⚽ Regras Básicas</div>
             <div class="help-card">
-                <b>3️⃣ Organiza os times</b>
-                <p>Use o Hora da Pelada para deixar tudo equilibrado e rápido. Você ainda pode cronometrar as partidas!</p>
-            </div>
-            <div class="help-card">
-                <b>4️⃣ Regras básicas</b>
-                <ul>
-                    <li>• Tempo de jogo (ex: 10 ou 15 min).</li>
-                    <li>• Falta com ou sem carrinho.</li>
-                    <li>• Gol só dentro da área (se for society).</li>
-                </ul>
-            </div>
-            <div class="help-card">
-                <b>6️⃣ Vaquinha 💰</b>
-                <p>Divide o valor do campo. Quem faltar sem avisar... paga mesmo assim (lei da pelada 😎).</p>
-            </div>
-            <div class="help-title">⚽ Regras por Modalidade</div>
-            <div class="help-card">
-                <b>Futebol</b>
-                <p>11 por time | 2 tempos de 45 min | Bola menor | Com impedimento | Lateral com as mãos .</p>
+                <b>Futebol Society</b>
+                <p>Lateral cobrado com as mãos. Sem impedimento. Goleiro não pode pegar com a mão se recuada com o pé.</p>
             </div>
             <div class="help-card">
                 <b>Futsal</b>
-                <p>5 por time | 2 tempos de 20 min | Bola menor | Sem impedimento | Lateral com os pés.</p>
-            </div>
-            <div class="help-card">
-                <b>Futebol Society</b>
-                <p>7 por time | Grama sintética | Ilimitadas substituições | Lateral com os pés.</p>
+                <p>Lateral cobrado com os pés. Goleiro tem 4 segundos. Limite de 5 faltas coletivas por tempo.</p>
             </div>
         </div>
 
-        <div id="areaB" style="display:none">
+<div id="areaB" style="display:none">
             
-            <div class="blog-post">
-                <h3>Como organizar uma pelada perfeita passo a passo</h3>
-                <p>Organizar uma pelada de futebol pode parecer simples, mas quando não há planejamento surgem atrasos, discussões e jogos desorganizados. Com algumas regras básicas e organização, é possível garantir uma pelada divertida, justa e agradável para todos.</p>
-                <p><b>1. Defina dia, horário e local</b><br>Escolher um dia fixo da semana ajuda a criar compromisso entre os jogadores. O horário deve atender a maioria e o local precisa ser adequado ao número de participantes.</p>
-                <p><b>2. Confirme a presença dos jogadores</b><br>Evite contar com “talvez”. Confirmar quem realmente vai jogar evita falta ou excesso de jogadores no dia da pelada.</p>
-                <p><b>3. Sorteie os times corretamente</b><br>O sorteio é essencial para evitar favoritismo. Ferramentas online ajudam a criar times equilibrados de forma rápida e imparcial.</p>
-                <p><b>4. Estabeleça regras antes do jogo</b><br>Defina tempo de jogo, substituições, faltas e critérios de vitória antes da bola rolar. Isso evita conflitos durante a partida.</p>
-                <p><b>5. Controle tempo e placar</b><br>Ter alguém responsável pelo cronômetro e pelo placar mantém a organização e evita discussões.</p>
-                <p>Com planejamento e regras claras, organizar uma pelada se torna simples. Uma boa organização garante jogos equilibrados e diversão para todos.</p>
-            </div>
-
-            <div class="blog-post">
-                <h3>Como sortear times equilibrados na pelada</h3>
-                <p>Times desequilibrados são um dos maiores problemas em peladas. Quando um time é muito superior ao outro, o jogo perde a graça. Um bom sorteio faz toda a diferença.</p>
-                <p><b>Por que o sorteio é importante?</b><br>O sorteio evita favoritismo, reduz discussões e torna os jogos mais competitivos e justos.</p>
-                <p><b>Métodos de sorteio mais usados</b></p>
+            <article class="blog-post">
+                <h3>1. Guia Definitivo: Como Melhorar o Condicionamento Físico para o Futebol Amador</h3>
+                <p>O futebol amador, carinhosamente chamado de pelada, exige um esforço físico intermitente que difere de uma corrida constante. Para não cansar nos primeiros dez minutos, o jogador precisa focar em treinos de HIIT (Treino Intervalado de Alta Intensidade). Isso simula os piques de velocidade seguidos de curtos períodos de descanso que ocorrem durante o jogo.</p>
+                <h4>O Segredo da Respiração</h4>
+                <p>Muitos amadores cometem o erro de respirar apenas pela boca, o que acelera a fadiga. A técnica correta envolve a inspiração nasal profunda para filtrar e aquecer o ar, otimizando a oxigenação do sangue. Além disso, o fortalecimento do core (abdômen e lombar) permite que o jogador mantenha a postura correta mesmo sob exaustão, evitando dores nas costas após a partida.</p>
                 <ul>
-                    <li>Sorteio manual com papel</li>
-                    <li>Escolha por capitães</li>
-                    <li>Sorteio automático online</li>
+                    <li>Realize treinos de tiro de 30 metros.</li>
+                    <li>Pratique o descanso ativo caminhando, nunca sentando logo após o pique.</li>
+                    <li>Fortaleça as panturrilhas para evitar cãibras comuns no segundo tempo.</li>
                 </ul>
-                <p>O sorteio automático é o mais rápido e imparcial.</p>
-                <p><b>Dicas para equilibrar os times</b><br>Misture jogadores experientes com iniciantes, distribua bem os goleiros e evite repetir sempre os mesmos times.</p>
-                <p>Sortear times equilibrados melhora o clima da pelada e garante partidas mais disputadas e divertidas.</p>
-            </div>
+            </article>
 
-            <div class="blog-post">
-                <h3>Regras do futebol society explicadas para peladas</h3>
-                <p>O futebol society é uma das modalidades mais populares em peladas. Conhecer suas regras básicas evita confusão e mantém o jogo organizado.</p>
-                <p><b>Quantidade de jogadores</b><br>Normalmente são 7 jogadores por time, incluindo o goleiro, mas isso pode variar conforme o espaço disponível.</p>
-                <p><b>Tempo de jogo</b><br>O tempo costuma variar entre 15 e 25 minutos, dependendo do número de jogadores e do ritmo da partida.</p>
-                <p><b>Faltas e substituições</b><br>As substituições geralmente são livres. As faltas devem ser marcadas com bom senso, priorizando o jogo limpo.</p>
-                <p><b>Bola e campo</b><br>O campo é de grama sintética e a bola utilizada é específica para futebol society.</p>
-                <p>Seguir as regras do futebol society torna a pelada mais justa, organizada e agradável.</p>
-            </div>
+            <article class="blog-post">
+                <h3>2. Gestão de Grupos: Como Administrar sua Pelada no WhatsApp sem Conflitos</h3>
+                <p>Administrar um grupo de futebol pode ser uma tarefa ingrata. O segredo para o sucesso é a automação e regras rígidas. O uso de listas automáticas com horários de corte é essencial. Se o jogo é na quarta, a lista deve fechar na terça à noite. Isso permite que o organizador busque substitutos (os famosos "convidados") com antecedência caso o quórum não seja atingido.</p>
+                <h4>Regra Financeira e Mensalistas</h4>
+                <p>O maior gargalo é o financeiro. Grupos saudáveis trabalham com o modelo de mensalistas, onde o valor da quadra é dividido fixamente, e os avulsos pagam um valor prêmio. Isso garante que a quadra esteja paga mesmo se alguém faltar. Utilize o <b>Hora da Pelada</b> para mostrar transparência no sorteio, evitando a percepção de que o administrador está favorecendo amigos na divisão dos times.</p>
+            </article>
 
-            <div class="blog-post">
-                <h3>Erros comuns ao organizar uma pelada</h3>
-                <p>Muitas peladas acabam mal não por falta de habilidade, mas por erros simples de organização.</p>
-                <p><b>Principais erros</b></p>
+            <article class="blog-post">
+                <h3>3. A Ciência do Sorteio: Por que o Equilíbrio dos Times é Vital para o Jogo</h3>
+                <p>Um jogo onde um time ganha de 10 a 0 não é divertido para ninguém. O equilíbrio técnico mantém a competitividade e o engajamento. Algoritmos de sorteio aleatório, como o presente em nossa ferramenta, removem o viés emocional. Quando os times são feitos "no dedo", o capitão tende a escolher os mais habilidosos primeiro, criando uma disparidade injusta.</p>
+                <h4>Critérios de Nivelamento</h4>
+                <p>Para uma organização profissional, classifique os jogadores em categorias (A, B e C) antes de rodar o sorteio. Isso garante que cada time tenha pelo menos um marcador, um passador e um finalizador. O equilíbrio evita discussões e melhora o clima social do grupo, que é o objetivo principal do futebol entre amigos.</p>
+            </article>
+
+            <article class="blog-post">
+                <h3>4. Guia de Equipamentos: Como Escolher a Chuteira Certa para Cada Piso</h3>
+                <p>Usar uma chuteira de campo (travas altas) em um gramado sintético (society) é a receita certa para uma lesão de ligamento cruzado anterior (LCA). As travas altas não deslizam na borracha do sintético, travando o pé enquanto o corpo gira. No futsal, a sola deve ser de borracha natural (gum sole) para máxima aderência em quadras de taco ou cimento.</p>
+                <h4>Manutenção e Durabilidade</h4>
+                <p>Para que sua chuteira dure mais, nunca a seque ao sol, pois isso resseca o material sintético ou o couro, causando rachaduras. Após o jogo, limpe com um pano úmido e deixe secar à sombra em local ventilado. O uso de meias antiderrapantes também tem se tornado popular, pois evita que o pé deslize dentro do calçado, prevenindo bolhas.</p>
+            </article>
+
+            <article class="blog-post">
+                <h3>5. Táticas Modernas: Aplicando o 2-3-1 no Futebol Society</h3>
+                <p>O futebol society evoluiu. A formação 2-3-1 é considerada a mais equilibrada para o formato 7 vs 7. Ela oferece dois defensores fixos, um volante central que distribui o jogo e dois alas que apoiam tanto o ataque quanto a defesa. O "pivô" na frente serve como referência para segurar a bola e esperar a subida dos companheiros.</p>
+                <h4>Transição Defensiva</h4>
+                <p>O maior erro no amador é o "efeito manada", onde todos correm atrás da bola. No 2-3-1, a disciplina posicional é chave. Quando o time perde a posse, os alas devem fechar o meio rapidamente para impedir o contra-ataque. O goleiro moderno também atua como um líbero, jogando com os pés para oferecer opção de passe e desafogar a pressão adversária.</p>
+            </article>
+
+            <article class="blog-post">
+                <h3>6. Nutrição Esportiva: O que comer antes e depois da Pelada</h3>
+                <p>A performance em campo começa na cozinha. Duas horas antes do jogo, foque em carboidratos complexos (como batata doce ou macarrão integral) que liberam energia gradualmente. Evite gorduras e excesso de fibras, que podem causar desconforto gástrico durante os piques de alta intensidade.</p>
+                <h4>Janela de Recuperação</h4>
+                <p>Após o apito final, o corpo entra em estado catabólico. É o momento de repor o glicogênio muscular com carboidratos simples e proteínas de rápida absorção. A hidratação deve ser contínua: para cada quilo perdido durante o exercício, deve-se ingerir cerca de 1,5 litros de água ou isotônico para recuperar os eletrólitos perdidos no suor.</p>
+            </article>
+
+            <article class="blog-post">
+                <h3>7. Lesões Comuns no Futebol: Prevenção e Tratamento de Primeiros Socorros</h3>
+                <p>Entorses de tornozelo e estiramentos na coxa são as lesões mais frequentes. A prevenção passa obrigatoriamente por um aquecimento neuromuscular de 10 a 15 minutos. Movimentos circulares nas articulações e trotes leves preparam os tendões para a carga do jogo.</p>
+                <h4>O Protocolo RICE</h4>
+                <p>Caso ocorra uma lesão leve, utilize o protocolo RICE: Repouso, Gelo (Ice), Compressão e Elevação. O gelo deve ser aplicado nas primeiras 48 horas para controlar o processo inflamatório. Nunca ignore uma dor persistente; o futebol amador não vale uma cirurgia ou meses de fisioterapia por falta de cuidado imediato.</p>
+            </article>
+
+            <article class="blog-post">
+                <h3>8. A Importância do Aspecto Psicológico e Fair Play</h3>
+                <p>O futebol é um esporte de contato e emoções à flor da pele. No entanto, o controle emocional é o que diferencia um bom jogador de um "brigão". O estresse do dia a dia não deve ser descarregado em campo. O respeito ao árbitro (mesmo que seja um colega) e aos adversários garante que a pelada continue existindo por anos.</p>
+                <h4>Liderança Positiva</h4>
+                <p>Incentivar um companheiro que errou um passe é muito mais eficaz do que gritar. Times que mantêm a moral alta tendem a buscar resultados impossíveis. O <b>Hora da Pelada</b> promove a união ao facilitar a organização, permitindo que os jogadores foquem apenas na diversão e no companheirismo.</p>
+            </article>
+
+            <article class="blog-post">
+                <h3>9. Fundamentos Técnicos: Como Melhorar seu Passe e Domínio</h3>
+                <p>Mesmo na pelada, a técnica individual faz a diferença. O domínio "orientado" (aquele que você já prepara o corpo para o próximo movimento) é a habilidade mais subestimada. Ao receber a bola, não a deixe parar morta nos pés; direcione-a para o espaço vazio.</p>
                 <ul>
-                    <li>Não confirmar jogadores</li>
-                    <li>Não definir regras antes do jogo</li>
-                    <li>Times desequilibrados</li>
-                    <li>Falta de controle do tempo</li>
-                    <li>Discussões desnecessárias</li>
+                    <li>Passe com a parte interna (chapada) para maior precisão.</li>
+                    <li>Mantenha o pé de apoio apontado para o alvo.</li>
+                    <li>Treine o uso da perna não dominante para se tornar um jogador completo.</li>
                 </ul>
-                <p><b>Como evitar esses erros</b><br>Planejamento, comunicação clara e uso de ferramentas de organização ajudam a evitar a maioria dos problemas.</p>
-                <p>Evitar erros simples garante uma pelada mais organizada, tranquila e divertida.</p>
-            </div>
+            </article>
 
-            <div class="blog-post">
-                <h3>Qual é o tempo ideal de jogo em uma pelada?</h3>
-                <p>Definir o tempo correto de jogo é essencial para manter a pelada dinâmica e evitar desgaste excessivo.</p>
-                <p><b>Tempo médio por modalidade</b></p>
-                <ul>
-                    <li>Futsal: 10 a 15 minutos</li>
-                    <li>Society: 15 a 25 minutos</li>
-                    <li>Campo reduzido: 20 a 30 minutos</li>
-                </ul>
-            </div>
+            <article class="blog-post">
+                <h3>10. O Papel do Goleiro no Futebol Moderno</h3>
+                <p>O goleiro não é mais apenas alguém que evita gols. No futebol society e futsal, ele é o início do ataque. Ter um goleiro que sabe jogar com os pés cria uma superioridade numérica (5 contra 4 ou 7 contra 6) que desarticula qualquer marcação individual.</p>
+                <h4>Posicionamento e Ângulos</h4>
+                <p>Fechar o ângulo é mais importante do que ter reflexos rápidos. Um goleiro bem posicionado faz defesas difíceis parecerem fáceis. A comunicação constante com a defesa ajuda a organizar a marcação e evita que atacantes entrem livres na área.</p>
+            </article>
+
+            <article class="blog-post">
+                <h3>11. Como Organizar um Torneio Interno de Curta Duração</h3>
+                <p>Se o seu grupo é grande, realizar um torneio "relâmpago" de um dia pode renovar os ânimos. Divida os jogadores em 4 times e faça semifinais e final. Isso aumenta a competitividade saudável e cria histórias para contar no churrasco pós-jogo.</p>
+                <h4>Premiações Symbolicas</h4>
+                <p>Não precisa de troféus caros. Muitas vezes, o direito de não pagar a mensalidade do próximo mês ou um "troféu caneco" já servem de motivação. O uso de um cronômetro digital preciso é fundamental para que nenhum time se sinta prejudicado pelo tempo de jogo.</p>
+            </article>
+
+            <article class="blog-post">
+                <h3>12. Hidratação e Performance: O que a ciência diz</h3>
+                <p>A desidratação de apenas 2% do peso corporal pode reduzir a performance esportiva em até 20%. Isso se traduz em passes errados e decisões lentas. Comece a se hidratar horas antes da partida, e não apenas quando sentir sede, pois a sede já é um sinal de desidratação leve.</p>
+                <h4>Isotônicos vs Água</h4>
+                <p>Em jogos de longa duração (mais de 60 minutos), a água pura pode não ser suficiente para repor o sódio e potássio. Os isotônicos ajudam a prevenir as famosas cãibras e mantêm os níveis de açúcar no sangue estáveis para evitar a "quebra" física no final do jogo.</p>
+            </article>
+
+            <article class="blog-post">
+                <h3>13. O Futebol como Ferramenta de Saúde Mental</h3>
+                <p>Além dos benefícios físicos, a pelada semanal é uma válvula de escape para o estresse do trabalho e da rotina. A interação social e a liberação de endorfina e dopamina durante o exercício combatem sintomas de ansiedade e depressão.</p>
+                <h4>Networking e Amizade</h4>
+                <p>Muitas oportunidades de negócios e amizades duradouras nascem nos campos de futebol. O senso de pertencimento a um grupo é um dos pilares do bem-estar humano. Ter um ambiente organizado ajuda a manter esses laços sem os desgastes de uma organização amadora e confusa.</p>
+            </article>
+
+            <article class="blog-post">
+                <h3>14. Regras do Futsal vs Society: Principais Diferenças</h3>
+                <p>É comum jogadores de society se confundirem ao jogar futsal e vice-versa. No futsal, a cobrança de lateral é feita com os pés e o goleiro tem o limite de 4 segundos para soltar a bola. Já no society, o lateral é com as mãos (na maioria das ligas) e não existe a regra dos 4 segundos de forma tão rígida.</p>
+                <h4>Faltas Coletivas</h4>
+                <p>No futsal, após a 5ª falta coletiva em um tempo, todas as faltas subsequentes resultam em tiro livre direto sem barreira. No society, as punições costumam envolver cartões temporários (2 ou 5 minutos fora), o que exige uma estratégia diferente para não deixar o time em desvantagem numérica.</p>
+            </article>
+
+            <article class="blog-post">
+                <h3>15. Análise Tática: Como vencer times tecnicamente superiores</h3>
+                <p>Se o seu time é mais fraco tecnicamente, a solução é o rigor tático e a compactação. Jogar com as linhas baixas e explorar o contra-ataque é a forma mais eficiente de vencer adversários "lisos". Force o adversário a chutar de longe e feche as linhas de passe centrais.</p>
+                <h4>Aproveitamento de Bolas Paradas</h4>
+                <p>Em jogos equilibrados, a bola parada decide. Treinar um posicionamento simples em escanteios pode garantir aquele gol salvador. Marcar individualmente os jogadores mais perigosos e fazer zona no primeiro pau é a estratégia defensiva mais sólida no futebol amador.</p>
+            </article>
+
+            <article class="blog-post">
+                <h3>16. O Futuro do Futebol Amador e a Tecnologia</h3>
+                <p>A tecnologia chegou para ficar na várzea. De aplicativos de sorteio como o <b>Hora da Pelada</b> até câmeras que gravam os melhores momentos, a experiência do peladeiro está se tornando profissional. Isso valoriza o esporte e incentiva mais pessoas a saírem do sedentarismo.</p>
+                <h4>Conclusão e Próximos Passos</h4>
+                <p>Organização é a palavra-chave. Um grupo que utiliza ferramentas digitais para gerir nomes, tempos e placares demonstra respeito pelo tempo dos participantes. Evolua sua pelada para o próximo nível e garanta que a única preocupação dos jogadores seja balançar as redes!</p>
+            </article>
 
         </div>
-
     </div>
 
     <div id="pageSobre" class="page-content">
-        <h2>Sobre Nós</h2>
-        <p><b>Bem-vindo ao Hora da Pelada</b></p>
-        <p>O Hora da Pelada nasceu da paixão pelo futebol e da necessidade de organizar o esporte mais popular do Brasil de forma inteligente e prática. Em um mundo cada vez mais digital, acreditamos que o esporte presencial é essencial para a saúde e a conexão social, e achamos que a tecnologia pode contribuir com isso.</p>
+        <h2>Sobre o Projeto</h2>
+          <p>O <b>Hora da Pelada</b> é um projeto independente desenvolvido integralmente por mim, com o objetivo de facilitar a vida de quem organiza e joga futebol amador.</p>
+        <p>A ideia surgiu da necessidade de ter um sorteador rápido e um placar funcional que pudesse ser acessado pelo celular na beira do campo, sem burocracia.</p>
+        <p>Como desenvolvedor único, busco sempre evoluir a ferramenta baseado no feedback dos peladeiros. Este site é feito de um apaixonado por futebol para outros apaixonados.</p>
         <button class="btn-principal" onclick="goHome()" style="background:#888;">VOLTAR</button>
     </div>
 
     <div id="pagePrivacidade" class="page-content">
         <h2>Política de Privacidade</h2>
-        <p>A sua privacidade é importante para nós. É política do Hora da Pelada respeitar a sua privacidade em relação a qualquer informação que possamos coletar no site.</p>
-        <p><b>1. Coleta de Informações</b><br>Solicitamos informações pessoais apenas quando realmente precisamos delas para lhe fornecer um serviço. Fazemo-lo por meios justos e legais, com o seu conhecimento e consentimento.</p>
-        <p><b>2. Uso de Dados e Cookies</b><br>Nosso site pode utilizar cookies para melhorar sua experiência de navegação. Esses dados são usados para entender como você interage com nosso conteúdo e para fins de análise técnica e de desempenho.</p>
-        <p><b>3. Segurança</b><br>Como estamos hospedados em ambiente seguro utilizamos tecnologias padrão de mercado para proteger seus dados contra acessos não autorizados. Não compartilhamos informações de identificação pessoal publicamente ou com terceiros, exceto quando exigido por lei.</p>
-        <p><b>4. Direitos do Usuário</b><br>Você é livre para recusar a nossa solicitação de informações pessoais, entendendo que talvez não possamos fornecer alguns dos serviços desejados.</p>
-        <p>Última atualização: Janeiro de 2026.</p>
+        <p>Esta Política de Privacidade descreve como o Hora da Pelada coleta, usa e protege as informações dos usuários.</p>
+        
+        <h4>1. Coleta de Dados e Cookies</h4>
+        <p>O Hora da Pelada utiliza cookies para melhorar a experiência do usuário e personalizar conteúdo. O Google, como fornecedor de terceiros, utiliza cookies para exibir anúncios em nosso site.</p>
+        
+        <h4>2. Cookie DART e Google AdSense</h4>
+        <p>O uso do cookie DART permite que o Google e seus parceiros exibam anúncios para nossos usuários com base em suas visitas ao Hora da Pelada.</p>
+
+        <h4>3. Proteção de Dados</h4>
+        <p>Não vendemos nem compartilhamos informações pessoais identificáveis com terceiros. As listas de nomes inseridas são processadas localmente no navegador.</p>
         <button class="btn-principal" onclick="goHome()" style="background:#888;">VOLTAR</button>
     </div>
 
     <div id="pageContato" class="page-content">
-        <h2>Contato</h2>
-        <p>Se você tiver alguma dúvida sobre como lidamos com dados de usuários, entre em contato conosco:</p>
+        <h2>Contato & Redes Sociais</h2>
+        <p>Tem alguma dúvida, encontrou um bug ou quer sugerir uma nova funcionalidade? Estamos à disposição.</p>
+        
         <div class="help-card">
-            <b>📧 E-mail:</b>
+            <b>📸 Instagram Oficial:</b>
+            <p><a href="https://www.instagram.com/horadapelada.br?igsh=MWwxdnJ0NHQxeWU5MQ==" target="_blank" style="color: var(--v); text-decoration: none; font-weight: bold;">@horadapelada.br</a></p>
+        </div>
+
+        <div class="help-card">
+            <b>📧 E-mail Oficial:</b>
             <p>contatohoradapelada@gmail.com</p>
-        </div>
-        <div class="help-card">
-            <b>📸 Instagram:</b>
-            <p><a href="https://www.instagram.com/horadapelada.br?igsh=MWwxdnJ0NHQxeWU5MQ==" target="_blank" style="color: var(--v); text-decoration: none;">@horadapelada.br</a></p>
-        </div>
         <button class="btn-principal" onclick="goHome()" style="background:#888;">VOLTAR</button>
     </div>
 
@@ -293,21 +359,20 @@
             <b>Histórico do Campeonato</b>
             <div id="hist-lista" style="font-size:12px; margin-top:5px;"></div>
         </div>
-        <button class="btn-principal" style="background:#888; margin-top:20px;" onclick="location.reload()">VOLTAR</button>
+        <button class="btn-principal" style="background:#888; margin-top:20px;" onclick="location.reload()">VOLTAR / NOVO JOGO</button>
     </div>
 
     <footer>
         <span onclick="showPage('pageSobre')">Sobre</span> • 
         <span onclick="showPage('pagePrivacidade')">Política de Privacidade</span> • 
         <span onclick="showPage('pageContato')">Contato</span><br>
-        © Hora da Pelada — Organização rápida de futebol.
+        © 2026 Hora da Pelada - Todos os direitos reservados.
     </footer>
 </div>
 
 <script>
     let tempo = 0, cron, rodando = false;
 
-    // Funções do Menu Lateral
     function toggleMenu() {
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
@@ -328,17 +393,16 @@
         selTab('S');
     }
 
-    // Suas Funções Originais
     function selTab(t) {
         document.getElementById('areaS').style.display = t=='S'?'block':'none';
         document.getElementById('areaC').style.display = t=='C'?'block':'none';
         document.getElementById('areaA').style.display = t=='A'?'block':'none';
-        document.getElementById('areaB').style.display = t=='B'?'block':'none'; // ADICIONADO PARA O BLOG
+        document.getElementById('areaB').style.display = t=='B'?'block':'none'; 
         
         document.getElementById('tabS').className = t=='S'?'tab-btn active':'tab-btn';
         document.getElementById('tabC').className = t=='C'?'tab-btn active':'tab-btn';
         document.getElementById('tabA').className = t=='A'?'tab-btn active':'tab-btn';
-        document.getElementById('tabB').className = t=='B'?'tab-btn active':'tab-btn'; // ADICIONADO PARA O BLOG
+        document.getElementById('tabB').className = t=='B'?'tab-btn active':'tab-btn';
     }
 
     function addTimeInput() {
@@ -352,7 +416,7 @@
 
     function gerarSorteio() {
         const txt = document.getElementById('nomes').value.split('\n').filter(n => n.trim()).sort(() => Math.random() - 0.5);
-        if(txt.length < 2) return alert("Adicione jogadores!");
+        if(txt.length < 2) return alert("Adicione pelo menos 2 jogadores para sortear!");
         const qtd = parseInt(document.getElementById('qtd').value);
         let html = "";
         for(let i=0, t=1; i < txt.length; i += qtd, t++) {
@@ -397,14 +461,17 @@
         document.getElementById('placar-area').innerHTML = html;
         document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
         document.getElementById('jogo').style.display = 'block';
+        window.scrollTo(0,0);
     }
 
     function playPause() {
         if(!rodando) {
-            rodando = true; document.getElementById('btn-p').innerText = "PAUSAR";
+            rodando = true;
+            document.getElementById('btn-p').innerText = "PAUSAR";
             cron = setInterval(() => { tempo++; updDisplay(); }, 1000);
         } else {
-            rodando = false; clearInterval(cron); document.getElementById('btn-p').innerText = "RETOMAR";
+            rodando = false; clearInterval(cron);
+            document.getElementById('btn-p').innerText = "RETOMAR";
         }
     }
 
@@ -418,7 +485,8 @@
                 document.getElementById('hist-lista').prepend(item);
             }
         }
-        tempo = 0; clearInterval(cron); rodando = false; updDisplay();
+        tempo = 0; clearInterval(cron);
+        rodando = false; updDisplay();
         document.getElementById('btn-p').innerText = "INICIAR";
     }
 
