@@ -12,7 +12,9 @@
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--f); margin: 0; display: flex; justify-content: center; overflow-x: hidden; }
         
         .box { width: 100%; max-width: 440px; background: #fff; min-height: 100vh; position: relative; box-shadow: 0 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; padding: 20px; box-sizing: border-box; }
-        
+        #cookieBanner{position:fixed;bottom:10px;left:10px;right:10px;background:#222;color:#fff;padding:8px 10px;border-radius:8px;font-size:12px;display:none;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:8px}
+        #cookieBanner a{color:#4caf50;white-space:nowrap}
+        #cookieBanner button{background:#4caf50;border:0;color:#000;padding:5px 8px;border-radius:6px;font-weight:700;cursor:pointer;white-space:nowrap}
         /* Cabeçalho */
         .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
         .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; }
@@ -61,7 +63,10 @@
         .help-card ul { margin: 0; padding: 0; list-style: none; }
 
         /* Estilos Blog */
-        article.blog-post { margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px; display: block; }
+        #loadMoreBtn {
+  display: none;
+}
+        article.blog-post { margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px; display: block;min-height: 180px; }
         article.blog-post h3 { color: var(--v); font-size: 20px; margin-bottom: 15px; margin-top: 0; }
         article.blog-post h4 { color: var(--d); font-size: 16px; margin: 15px 0 5px 0; }
         article.blog-post p { font-size: 15px; color: #444; line-height: 1.7; margin-bottom: 12px; text-align: justify; }
@@ -130,7 +135,7 @@
 
             <div class="footer-info">
                 <b>Hora da Pelada: O Jeito Fácil de Jogar</b><br>
-                Nossa ferramenta utiliza um algoritmo randômico para criar equipes equilibradas instantaneamente. Perfeito para grupos de WhatsApp, society e futsal.
+                Nossa ferramenta utiliza um algoritmo randômico para criar equipes equilibradas instantaneamente. Aproveite o cronômetro integrado para gerenciar o tempo de jogo sem complicações. Divirta-se e jogue com fair play!
             </div>
 
             <div class="seo-content">
@@ -159,7 +164,7 @@
             <div class="help-title">☕ Apoie o Projeto</div>
             <div class="help-card" style="border-left-color: #f1c40f; background: #fffdf0;">
                 <b>Pague um Café para o Desenvolvedor</b>
-                <p>Gostou da ferramenta? Ela é gratuita e sem anúncios invasivos. Você pode ajudar a manter o servidor online pagando um café!</p>
+                <p>Gostou da ferramenta? Ela é gratuita e utiliza anúncios de forma responsável, sem prejudicar a experiência do usuário. Você pode ajudar a manter o servidor online pagando um café!</p>
                 <p><b>Chave PIX (E-mail):</b><br>contatohoradapelada@gmail.com</p>
                 <p><i>Qualquer valor ajuda muito na evolução do site. Obrigado!</i></p>
             </div>
@@ -183,9 +188,9 @@
             </div>
         </div>
 
-<div id="areaB" style="display:none">
+<section id="areaB" style="display:none">
             
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>1. Guia Definitivo: Como Melhorar o Condicionamento Físico para o Futebol Amador</h3>
                 <p>O futebol amador, carinhosamente chamado de pelada, exige um esforço físico intermitente que difere de uma corrida constante. Para não cansar nos primeiros dez minutos, o jogador precisa focar em treinos de HIIT (Treino Intervalado de Alta Intensidade). Isso simula os piques de velocidade seguidos de curtos períodos de descanso que ocorrem durante o jogo.</p>
                 <h4>O Segredo da Respiração</h4>
@@ -197,56 +202,56 @@
                 </ul>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>2. Gestão de Grupos: Como Administrar sua Pelada no WhatsApp sem Conflitos</h3>
                 <p>Administrar um grupo de futebol pode ser uma tarefa ingrata. O segredo para o sucesso é a automação e regras rígidas. O uso de listas automáticas com horários de corte é essencial. Se o jogo é na quarta, a lista deve fechar na terça à noite. Isso permite que o organizador busque substitutos (os famosos "convidados") com antecedência caso o quórum não seja atingido.</p>
                 <h4>Regra Financeira e Mensalistas</h4>
                 <p>O maior gargalo é o financeiro. Grupos saudáveis trabalham com o modelo de mensalistas, onde o valor da quadra é dividido fixamente, e os avulsos pagam um valor prêmio. Isso garante que a quadra esteja paga mesmo se alguém faltar. Utilize o <b>Hora da Pelada</b> para mostrar transparência no sorteio, evitando a percepção de que o administrador está favorecendo amigos na divisão dos times.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>3. A Ciência do Sorteio: Por que o Equilíbrio dos Times é Vital para o Jogo</h3>
                 <p>Um jogo onde um time ganha de 10 a 0 não é divertido para ninguém. O equilíbrio técnico mantém a competitividade e o engajamento. Algoritmos de sorteio aleatório, como o presente em nossa ferramenta, removem o viés emocional. Quando os times são feitos "no dedo", o capitão tende a escolher os mais habilidosos primeiro, criando uma disparidade injusta.</p>
                 <h4>Critérios de Nivelamento</h4>
                 <p>Para uma organização profissional, classifique os jogadores em categorias (A, B e C) antes de rodar o sorteio. Isso garante que cada time tenha pelo menos um marcador, um passador e um finalizador. O equilíbrio evita discussões e melhora o clima social do grupo, que é o objetivo principal do futebol entre amigos.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>4. Guia de Equipamentos: Como Escolher a Chuteira Certa para Cada Piso</h3>
                 <p>Usar uma chuteira de campo (travas altas) em um gramado sintético (society) é a receita certa para uma lesão de ligamento cruzado anterior (LCA). As travas altas não deslizam na borracha do sintético, travando o pé enquanto o corpo gira. No futsal, a sola deve ser de borracha natural (gum sole) para máxima aderência em quadras de taco ou cimento.</p>
                 <h4>Manutenção e Durabilidade</h4>
                 <p>Para que sua chuteira dure mais, nunca a seque ao sol, pois isso resseca o material sintético ou o couro, causando rachaduras. Após o jogo, limpe com um pano úmido e deixe secar à sombra em local ventilado. O uso de meias antiderrapantes também tem se tornado popular, pois evita que o pé deslize dentro do calçado, prevenindo bolhas.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>5. Táticas Modernas: Aplicando o 2-3-1 no Futebol Society</h3>
                 <p>O futebol society evoluiu. A formação 2-3-1 é considerada a mais equilibrada para o formato 7 vs 7. Ela oferece dois defensores fixos, um volante central que distribui o jogo e dois alas que apoiam tanto o ataque quanto a defesa. O "pivô" na frente serve como referência para segurar a bola e esperar a subida dos companheiros.</p>
                 <h4>Transição Defensiva</h4>
                 <p>O maior erro no amador é o "efeito manada", onde todos correm atrás da bola. No 2-3-1, a disciplina posicional é chave. Quando o time perde a posse, os alas devem fechar o meio rapidamente para impedir o contra-ataque. O goleiro moderno também atua como um líbero, jogando com os pés para oferecer opção de passe e desafogar a pressão adversária.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>6. Nutrição Esportiva: O que comer antes e depois da Pelada</h3>
                 <p>A performance em campo começa na cozinha. Duas horas antes do jogo, foque em carboidratos complexos (como batata doce ou macarrão integral) que liberam energia gradualmente. Evite gorduras e excesso de fibras, que podem causar desconforto gástrico durante os piques de alta intensidade.</p>
                 <h4>Janela de Recuperação</h4>
                 <p>Após o apito final, o corpo entra em estado catabólico. É o momento de repor o glicogênio muscular com carboidratos simples e proteínas de rápida absorção. A hidratação deve ser contínua: para cada quilo perdido durante o exercício, deve-se ingerir cerca de 1,5 litros de água ou isotônico para recuperar os eletrólitos perdidos no suor.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>7. Lesões Comuns no Futebol: Prevenção e Tratamento de Primeiros Socorros</h3>
                 <p>Entorses de tornozelo e estiramentos na coxa são as lesões mais frequentes. A prevenção passa obrigatoriamente por um aquecimento neuromuscular de 10 a 15 minutos. Movimentos circulares nas articulações e trotes leves preparam os tendões para a carga do jogo.</p>
                 <h4>O Protocolo RICE</h4>
                 <p>Caso ocorra uma lesão leve, utilize o protocolo RICE: Repouso, Gelo (Ice), Compressão e Elevação. O gelo deve ser aplicado nas primeiras 48 horas para controlar o processo inflamatório. Nunca ignore uma dor persistente; o futebol amador não vale uma cirurgia ou meses de fisioterapia por falta de cuidado imediato.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>8. A Importância do Aspecto Psicológico e Fair Play</h3>
                 <p>O futebol é um esporte de contato e emoções à flor da pele. No entanto, o controle emocional é o que diferencia um bom jogador de um "brigão". O estresse do dia a dia não deve ser descarregado em campo. O respeito ao árbitro (mesmo que seja um colega) e aos adversários garante que a pelada continue existindo por anos.</p>
                 <h4>Liderança Positiva</h4>
                 <p>Incentivar um companheiro que errou um passe é muito mais eficaz do que gritar. Times que mantêm a moral alta tendem a buscar resultados impossíveis. O <b>Hora da Pelada</b> promove a união ao facilitar a organização, permitindo que os jogadores foquem apenas na diversão e no companheirismo.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>9. Fundamentos Técnicos: Como Melhorar seu Passe e Domínio</h3>
                 <p>Mesmo na pelada, a técnica individual faz a diferença. O domínio "orientado" (aquele que você já prepara o corpo para o próximo movimento) é a habilidade mais subestimada. Ao receber a bola, não a deixe parar morta nos pés; direcione-a para o espaço vazio.</p>
                 <ul>
@@ -256,55 +261,57 @@
                 </ul>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>10. O Papel do Goleiro no Futebol Moderno</h3>
                 <p>O goleiro não é mais apenas alguém que evita gols. No futebol society e futsal, ele é o início do ataque. Ter um goleiro que sabe jogar com os pés cria uma superioridade numérica (5 contra 4 ou 7 contra 6) que desarticula qualquer marcação individual.</p>
                 <h4>Posicionamento e Ângulos</h4>
                 <p>Fechar o ângulo é mais importante do que ter reflexos rápidos. Um goleiro bem posicionado faz defesas difíceis parecerem fáceis. A comunicação constante com a defesa ajuda a organizar a marcação e evita que atacantes entrem livres na área.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>11. Como Organizar um Torneio Interno de Curta Duração</h3>
                 <p>Se o seu grupo é grande, realizar um torneio "relâmpago" de um dia pode renovar os ânimos. Divida os jogadores em 4 times e faça semifinais e final. Isso aumenta a competitividade saudável e cria histórias para contar no churrasco pós-jogo.</p>
                 <h4>Premiações Symbolicas</h4>
                 <p>Não precisa de troféus caros. Muitas vezes, o direito de não pagar a mensalidade do próximo mês ou um "troféu caneco" já servem de motivação. O uso de um cronômetro digital preciso é fundamental para que nenhum time se sinta prejudicado pelo tempo de jogo.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>12. Hidratação e Performance: O que a ciência diz</h3>
                 <p>A desidratação de apenas 2% do peso corporal pode reduzir a performance esportiva em até 20%. Isso se traduz em passes errados e decisões lentas. Comece a se hidratar horas antes da partida, e não apenas quando sentir sede, pois a sede já é um sinal de desidratação leve.</p>
                 <h4>Isotônicos vs Água</h4>
                 <p>Em jogos de longa duração (mais de 60 minutos), a água pura pode não ser suficiente para repor o sódio e potássio. Os isotônicos ajudam a prevenir as famosas cãibras e mantêm os níveis de açúcar no sangue estáveis para evitar a "quebra" física no final do jogo.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>13. O Futebol como Ferramenta de Saúde Mental</h3>
                 <p>Além dos benefícios físicos, a pelada semanal é uma válvula de escape para o estresse do trabalho e da rotina. A interação social e a liberação de endorfina e dopamina durante o exercício combatem sintomas de ansiedade e depressão.</p>
                 <h4>Networking e Amizade</h4>
                 <p>Muitas oportunidades de negócios e amizades duradouras nascem nos campos de futebol. O senso de pertencimento a um grupo é um dos pilares do bem-estar humano. Ter um ambiente organizado ajuda a manter esses laços sem os desgastes de uma organização amadora e confusa.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>14. Regras do Futsal vs Society: Principais Diferenças</h3>
                 <p>É comum jogadores de society se confundirem ao jogar futsal e vice-versa. No futsal, a cobrança de lateral é feita com os pés e o goleiro tem o limite de 4 segundos para soltar a bola. Já no society, o lateral é com as mãos (na maioria das ligas) e não existe a regra dos 4 segundos de forma tão rígida.</p>
                 <h4>Faltas Coletivas</h4>
                 <p>No futsal, após a 5ª falta coletiva em um tempo, todas as faltas subsequentes resultam em tiro livre direto sem barreira. No society, as punições costumam envolver cartões temporários (2 ou 5 minutos fora), o que exige uma estratégia diferente para não deixar o time em desvantagem numérica.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>15. Análise Tática: Como vencer times tecnicamente superiores</h3>
                 <p>Se o seu time é mais fraco tecnicamente, a solução é o rigor tático e a compactação. Jogar com as linhas baixas e explorar o contra-ataque é a forma mais eficiente de vencer adversários "lisos". Force o adversário a chutar de longe e feche as linhas de passe centrais.</p>
                 <h4>Aproveitamento de Bolas Paradas</h4>
                 <p>Em jogos equilibrados, a bola parada decide. Treinar um posicionamento simples em escanteios pode garantir aquele gol salvador. Marcar individualmente os jogadores mais perigosos e fazer zona no primeiro pau é a estratégia defensiva mais sólida no futebol amador.</p>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post lazy-blog">
                 <h3>16. O Futuro do Futebol Amador e a Tecnologia</h3>
                 <p>A tecnologia chegou para ficar na várzea. De aplicativos de sorteio como o <b>Hora da Pelada</b> até câmeras que gravam os melhores momentos, a experiência do peladeiro está se tornando profissional. Isso valoriza o esporte e incentiva mais pessoas a saírem do sedentarismo.</p>
                 <h4>Conclusão e Próximos Passos</h4>
                 <p>Organização é a palavra-chave. Um grupo que utiliza ferramentas digitais para gerir nomes, tempos e placares demonstra respeito pelo tempo dos participantes. Evolua sua pelada para o próximo nível e garanta que a única preocupação dos jogadores seja balançar as redes!</p>
             </article>
-
+            <button id="loadMoreBtn" class="btn-add" onclick="loadMore()">
+  CARREGAR MAIS
+</button>
         </div>
     </div>
 
@@ -328,6 +335,8 @@
 
         <h4>3. Proteção de Dados</h4>
         <p>Não vendemos nem compartilhamos informações pessoais identificáveis com terceiros. As listas de nomes inseridas são processadas localmente no navegador.</p>
+        <h4>4. Consentimento</h4>
+<p>Ao utilizar o Hora da Pelada, o usuário concorda com esta Política de Privacidade e com o uso de cookies conforme descrito.</p>
         <button class="btn-principal" onclick="goHome()" style="background:#888;">VOLTAR</button>
     </div>
 
@@ -369,8 +378,19 @@
         © 2026 Hora da Pelada - Todos os direitos reservados.
     </footer>
 </div>
+<!-- BANNER DE COOKIES -->
+<div id="cookieBanner">
+  <p>
+    Usamos cookies para melhorar sua experiência, personalizar conteúdo e
+    exibir anúncios relevantes, conforme nossa
+    <a href="politica-de-privacidade.html" target="_blank">
+      Política de Privacidade
+    </a>.
+  </p>
 
-<script>
+  <button id="acceptCookies">Aceitar</button>
+</div>
+<script defer>
     let tempo = 0, cron, rodando = false;
 
     function toggleMenu() {
@@ -393,16 +413,22 @@
         selTab('S');
     }
 
-    function selTab(t) {
-        document.getElementById('areaS').style.display = t=='S'?'block':'none';
-        document.getElementById('areaC').style.display = t=='C'?'block':'none';
-        document.getElementById('areaA').style.display = t=='A'?'block':'none';
-        document.getElementById('areaB').style.display = t=='B'?'block':'none'; 
-        
-        document.getElementById('tabS').className = t=='S'?'tab-btn active':'tab-btn';
-        document.getElementById('tabC').className = t=='C'?'tab-btn active':'tab-btn';
-        document.getElementById('tabA').className = t=='A'?'tab-btn active':'tab-btn';
-        document.getElementById('tabB').className = t=='B'?'tab-btn active':'tab-btn';
+    function selTab(t){
+    document.getElementById('areaS').style.display = t=='S'?'block':'none';
+    document.getElementById('areaC').style.display = t=='C'?'block':'none';
+    document.getElementById('areaA').style.display = t=='A'?'block':'none';
+    document.getElementById('areaB').style.display = t=='B'?'block':'none'; 
+
+    document.getElementById('tabS').className = t=='S'?'tab-btn active':'tab-btn';
+    document.getElementById('tabC').className = t=='C'?'tab-btn active':'tab-btn';
+    document.getElementById('tabA').className = t=='A'?'tab-btn active':'tab-btn';
+    document.getElementById('tabB').className = t=='B'?'tab-btn active':'tab-btn';
+
+    // INICIALIZA O BLOG SOMENTE QUANDO ABRIR
+    if (t === 'B' && !blogInit) {
+  initBlogLazy();
+  blogInit = true;
+}
     }
 
     function addTimeInput() {
@@ -494,6 +520,47 @@
         let h = Math.floor(tempo/3600), m = Math.floor((tempo%3600)/60), s = tempo%60;
         document.getElementById('display').innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
     }
+  let blogInit = false;
+let posts = [];
+let visible = 3;
+function initBlogLazy() {
+  posts = document
+  .getElementById('areaB')
+  .querySelectorAll('.lazy-blog');
+  visible = 3;
+
+  posts.forEach((post, index) => {
+    post.style.display = index < visible ? 'block' : 'none';
+  });
+
+  const btn = document.getElementById('loadMoreBtn');
+  if (btn) btn.style.display = posts.length > visible ? 'block' : 'none';
+}
+  function loadMore() {
+    for (let i = visible; i < visible + 3 && i < posts.length; i++) {
+      posts[i].style.display = 'block';
+    }
+    visible += 3;
+
+    if (visible >= posts.length) {
+      const btn = document.getElementById('loadMoreBtn');
+      if (btn) btn.style.display = 'none';
+    }
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    const banner = document.getElementById("cookieBanner");
+    const btn = document.getElementById("acceptCookies");
+
+    if (!localStorage.getItem("cookiesAccepted")) {
+      banner.style.display = "block";
+    }
+
+    btn.addEventListener("click", function () {
+      localStorage.setItem("cookiesAccepted", "true");
+      banner.style.display = "none";
+    });
+  });
+
 </script>
 </body>
 </html>
