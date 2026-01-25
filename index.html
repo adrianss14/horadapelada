@@ -8,88 +8,638 @@
     <meta name="keywords" content="sorteio de times, organizar pelada, futebol society, regras futebol, cronometro futebol, app pelada">
     
     <style>
-        :root { --v: #27ae60; --d: #2c3e50; --r: #e74c3c; --f: #f0f2f5; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--f); margin: 0; display: flex; justify-content: center; overflow-x: hidden; }
+        :root {
+            --verde: #27ae60;
+            --azul: #2c3e50;
+            --vermelho: #e74c3c;
+            --fundo: #f0f2f5;
+            --cinza: #888;
+        }
         
-        .box { width: 100%; max-width: 440px; background: #fff; min-height: 100vh; position: relative; box-shadow: 0 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; padding: 20px; box-sizing: border-box; }
-        #cookieBanner{position:fixed;bottom:10px;left:10px;right:10px;background:#222;color:#fff;padding:8px 10px;border-radius:8px;font-size:12px;display:none;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:8px}
-        #cookieBanner a{color:#4caf50;white-space:nowrap}
-        #cookieBanner button{background:#4caf50;border:0;color:#000;padding:5px 8px;border-radius:6px;font-weight:700;cursor:pointer;white-space:nowrap}
-        /* Cabeçalho */
-        .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; }
-        .logo-icon { width: 40px; height: 40px; background: var(--v); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         
-        h1.logo-text { margin: 0; display: block; font-size: 18px; color: var(--v); line-height: 1; font-weight: normal; }
-        .logo-text b { display: block; font-size: 18px; color: var(--v); line-height: 1; }
-        .logo-text span { font-size: 22px; font-weight: bold; color: #111; }
-
-        .menu-btn { background: none; border: none; cursor: pointer; padding: 5px; z-index: 1001; }
-        .menu-btn div { width: 25px; height: 3px; background: var(--d); margin: 4px 0; border-radius: 2px; }
-
-        /* Menu Lateral */
-        .sidebar { position: fixed; top: 0; right: -100%; width: 280px; height: 100%; background: #fff; box-shadow: -5px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.4s; padding: 60px 20px; box-sizing: border-box; }
-        .sidebar.active { right: 0; }
-        .sidebar ul { list-style: none; padding: 0; }
-        .sidebar li { padding: 15px 0; border-bottom: 1px solid #eee; font-weight: bold; color: var(--d); cursor: pointer; }
-        .sidebar li:hover { color: var(--v); }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 999; }
-
-        /* Conteúdo das Páginas */
-        .page-content { display: none; line-height: 1.6; font-size: 14px; color: #333; }
-        .page-content.active { display: block; }
-        .page-content h2 { color: var(--v); border-bottom: 2px solid var(--v); padding-bottom: 5px; margin-top: 0; }
-
-        .intro-text { font-size: 13px; color: #666; margin-bottom: 20px; line-height: 1.4; border-bottom: 1px solid #eee; padding-bottom: 15px; }
-
-        /* Abas de Navegação */
-        .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
-        .tab-btn { flex: 1; padding: 12px; border: none; background: #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; color: #444; }
-        .tab-btn.active { background: var(--v); color: white; }
-
-        /* Estilos de Inputs e Botões */
-        textarea { width: 100%; height: 100px; border-radius: 8px; border: 1px solid #ccc; padding: 12px; box-sizing: border-box; font-size: 14px; resize: none; margin-bottom: 10px; font-family: inherit; }
-        .input-group { margin-bottom: 20px; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 10px; }
-        .input-group input { width: 60px; padding: 8px; border: 1px solid #ccc; border-radius: 6px; }
-
-        .btn-principal { background: var(--v); color: white; width: 100%; padding: 18px; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-bottom: 15px; }
-        .btn-add { background: #eee; border: 1px dashed #999; color: #666; padding: 10px; border-radius: 8px; width: 100%; margin-bottom: 15px; cursor: pointer; font-weight: bold; }
-
-        .help-section { background: #fff; border-radius: 10px; margin-top: 10px; }
-        .help-title { font-size: 18px; font-weight: bold; color: var(--d); margin: 20px 0 10px 0; display: flex; align-items: center; gap: 8px; }
-        .help-card { background: #f9f9f9; border-left: 4px solid var(--v); padding: 15px; border-radius: 8px; margin-bottom: 15px; }
-        .help-card b { color: var(--v); display: block; margin-bottom: 5px; font-size: 15px; }
-        .help-card p, .help-card li { font-size: 13px; color: #444; margin: 5px 0; line-height: 1.5; padding-left: 10px; }
-        .help-card ul { margin: 0; padding: 0; list-style: none; }
-
-        /* Estilos Blog */
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: var(--fundo);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 440px;
+            background: #fff;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Cookie Banner */
+        #cookieBanner {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            background: #222;
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        
+        #cookieBanner a {
+            color: #4caf50;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        
+        #cookieBanner button {
+            background: #4caf50;
+            border: 0;
+            color: #000;
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        /* Header */
+        .header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            background: #fff;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--verde);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .logo-text {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.2;
+        }
+        
+        .logo-text b {
+            display: block;
+            font-size: 16px;
+            color: var(--verde);
+            font-weight: normal;
+        }
+        
+        .logo-text span {
+            font-size: 22px;
+            font-weight: bold;
+            color: #111;
+        }
+        
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+        
+        .menu-btn div {
+            width: 25px;
+            height: 3px;
+            background: var(--azul);
+            margin: 4px 0;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        
+        /* Sidebar */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 280px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 999;
+            transition: right 0.4s ease;
+            padding: 80px 20px 20px;
+            overflow-y: auto;
+        }
+        
+        .sidebar.active {
+            right: 0;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar li {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+            color: var(--azul);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .sidebar li:hover {
+            color: var(--verde);
+        }
+        
+        /* Content */
+        .content {
+            padding: 15px;
+            flex: 1;
+        }
+        
+        .intro-text {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #444;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background: var(--verde);
+            color: white;
+        }
+        
+        /* Page Content */
+        .page {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Sorteio Area */
+        textarea {
+            width: 100%;
+            height: 100px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            padding: 12px;
+            font-size: 14px;
+            resize: none;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .input-group input {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        /* Buttons */
+        .btn-principal {
+            background: var(--verde);
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            transition: background 0.3s;
+        }
+        
+        .btn-principal:hover {
+            background: #219653;
+        }
+        
+        .btn-add {
+            background: #eee;
+            border: 1px dashed #999;
+            color: #666;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-add:hover {
+            background: #ddd;
+            border-color: #666;
+        }
+        
+        /* Help Section */
+        .help-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--azul);
+            margin: 20px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .help-card {
+            background: #f9f9f9;
+            border-left: 4px solid var(--verde);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .help-card b {
+            color: var(--verde);
+            display: block;
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+        
+        .help-card p {
+            font-size: 13px;
+            color: #444;
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+        
+        /* Blog */
+        #areaB {
+            display: none;
+        }
+        
+        .blog-post {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            display: none;
+        }
+        
+        .blog-post.active {
+            display: block;
+        }
+        
+        .blog-post h3 {
+            color: var(--verde);
+            font-size: 18px;
+            margin-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .blog-post h4 {
+            color: var(--azul);
+            font-size: 16px;
+            margin: 15px 0 5px 0;
+        }
+        
+        .blog-post p {
+            font-size: 14px;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+        
+        .blog-post ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .blog-post li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            font-size: 14px;
+            color: #444;
+        }
+        
         #loadMoreBtn {
-  display: none;
-}
-        article.blog-post { margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px; display: block;min-height: 180px; }
-        article.blog-post h3 { color: var(--v); font-size: 20px; margin-bottom: 15px; margin-top: 0; }
-        article.blog-post h4 { color: var(--d); font-size: 16px; margin: 15px 0 5px 0; }
-        article.blog-post p { font-size: 15px; color: #444; line-height: 1.7; margin-bottom: 12px; text-align: justify; }
-        article.blog-post ul { padding-left: 20px; color: #444; margin-bottom: 15px; }
-        article.blog-post li { margin-bottom: 8px; line-height: 1.6; }
-
-        .seo-content { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
-        .seo-content h2 { font-size: 16px; color: var(--d); margin-bottom: 10px; }
-        .seo-content p { font-size: 13px; color: #666; line-height: 1.5; text-align: justify; }
-
-        .footer-info { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 20px; font-size: 13px; color: #666; }
-
-        /* Jogo e Placar */
-        .cron { background: #1a1a1a; color: #0f0; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
-        .t-card { border: 1px solid #ddd; border-radius: 12px; margin-bottom: 15px; overflow: hidden; background: #fff; }
-        .t-h { background: #f8f9fa; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
-        .j-i { display: flex; justify-content: space-between; padding: 8px 15px; border-top: 1px solid #f0f0f0; align-items: center; }
-        .cnt-group { display: flex; align-items: center; gap: 8px; }
-        .btn-c { background: #f1f1f1; border: 1px solid #ccc; width: 30px; height: 30px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .pts { min-width: 25px; text-align: center; font-weight: bold; }
-
-        footer { margin-top: auto; padding: 20px 0; text-align: center; font-size: 12px; color: #888; border-top: 1px solid #eee; }
-        footer span { cursor: pointer; text-decoration: underline; }
+            display: none;
+            width: 100%;
+        }
+        
+        /* Jogo/Placar */
+        .cron {
+            background: #1a1a1a;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        #display {
+            font-size: 40px;
+            font-family: monospace;
+            margin-bottom: 10px;
+        }
+        
+        .cron-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .cron-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .cron-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .cron-btn.start {
+            background: var(--verde);
+        }
+        
+        .cron-btn.reset {
+            background: var(--vermelho);
+        }
+        
+        /* Times */
+        .t-card {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            background: #fff;
+        }
+        
+        .t-header {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        .jogador-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 15px;
+            border-top: 1px solid #f0f0f0;
+            align-items: center;
+        }
+        
+        .contador-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-contador {
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .btn-contador:hover {
+            background: #e0e0e0;
+        }
+        
+        .pontos {
+            min-width: 25px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        /* Botão para salvar partida */
+        .btn-salvar {
+            background: #3498db;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        
+        .btn-salvar:hover {
+            background: #2980b9;
+        }
+        
+        /* SEO Content */
+        .seo-content {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        
+        .seo-content h2 {
+            font-size: 16px;
+            color: var(--azul);
+            margin-bottom: 10px;
+        }
+        
+        .seo-content p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+            text-align: justify;
+        }
+        
+        .footer-info {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            border-top: 1px solid #eee;
+            background: #fff;
+        }
+        
+        footer span {
+            cursor: pointer;
+            text-decoration: underline;
+            color: var(--verde);
+            margin: 0 5px;
+        }
+        
+        footer span:hover {
+            color: var(--azul);
+        }
+        
+        /* Campeonato */
+        .team-input-block {
+            margin-bottom: 15px;
+        }
+        
+        .team-input-block input,
+        .team-input-block textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        
+        .team-input-block input {
+            font-weight: bold;
+        }
+        
+        /* Histórico */
+        #hist-comp {
+            margin-top: 20px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .historico-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        #hist-lista {
+            font-size: 13px;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        #hist-lista div {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .btn-limpar {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                min-height: 100vh;
+                max-width: 100%;
+            }
+            
+            .sidebar {
+                width: 250px;
+                right: -250px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -107,59 +657,77 @@
     </ul>
 </nav>
 
-<div class="box">
-    <div class="header-top">
-        <div class="logo" onclick="goHome()">
-            <div class="logo-icon">⚽</div>
-            <h1 class="logo-text"><b>Hora da</b><span>Pelada</span></h1>
+<div class="container">
+    <div class="header">
+        <div class="header-top">
+            <div class="logo" onclick="goHome()">
+                <div class="logo-icon">⚽</div>
+                <div class="logo-text">
+                    <b>Hora da</b>
+                    <span>Pelada</span>
+                </div>
+            </div>
+            <button class="menu-btn" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
         </div>
-        <button class="menu-btn" onclick="toggleMenu()"><div></div><div></div><div></div></button>
-    </div>
-
-    <div id="mainUI" class="page-content active">
-        <div id="intro" class="intro-text">
+        
+        <div class="intro-text">
             Sua ferramenta definitiva para organizar a pelada: Sorteio de times, Cronômetro e Dicas de Futebol Society.
         </div>
-
+        
         <div class="tabs">
             <button id="tabS" class="tab-btn active" onclick="selTab('S')">Sorteio</button>
             <button id="tabC" class="tab-btn" onclick="selTab('C')">Campeonato</button>
             <button id="tabA" class="tab-btn" onclick="selTab('A')">Ajuda</button>
             <button id="tabB" class="tab-btn" onclick="selTab('B')">Blog</button>
         </div>
-
+    </div>
+    
+    <div class="content">
+        <!-- Área Sorteio -->
         <div id="areaS">
             <textarea id="nomes" placeholder="Cole a lista de jogadores aqui (um por linha)...&#10;Ex:&#10;João&#10;Pedro&#10;Lucas"></textarea>
-            <div class="input-group">Jogadores por Time: <input type="number" id="qtd" value="4"></div>
+            
+            <div class="input-group">
+                <span>Jogadores por Time:</span>
+                <input type="number" id="qtd" value="4" min="2" max="20">
+            </div>
+            
             <button class="btn-principal" onclick="gerarSorteio()">SORTEAR TIMES AGORA</button>
-
+            
             <div class="footer-info">
                 <b>Hora da Pelada: O Jeito Fácil de Jogar</b><br>
                 Nossa ferramenta utiliza um algoritmo randômico para criar equipes equilibradas instantaneamente. Aproveite o cronômetro integrado para gerenciar o tempo de jogo sem complicações. Divirta-se e jogue com fair play!
             </div>
-
+            
             <div class="seo-content">
                 <h2>O fim das "panelinhas" no futebol</h2>
                 <p>Quem organiza futebol amador sabe: a hora de dividir os times é a mais tensa. O <strong>Hora da Pelada</strong> resolve isso com imparcialidade. Além de sortear, você gerencia o tempo e o placar em um só lugar.</p>
                 <p>Acesse nossa aba <strong>Blog</strong> para ler dicas exclusivas sobre como melhorar a organização do seu jogo, escolher a melhor chuteira e evitar lesões.</p>
             </div>
         </div>
-
+        
+        <!-- Área Campeonato -->
         <div id="areaC" style="display:none">
             <div id="lista-times-input">
-                <div class="team-input-block" style="margin-bottom:15px;">
-                    <input type="text" placeholder="Nome do Time" class="t-name" value="Time A" style="width:100%; padding:8px; margin-bottom:5px; border-radius:5px; border:1px solid #ccc; font-weight:bold;">
-                    <textarea class="t-players" placeholder="Lista de jogadores..."></textarea>
+                <div class="team-input-block">
+                    <input type="text" placeholder="Nome do Time" class="t-name" value="Time A">
+                    <textarea class="t-players" placeholder="Lista de jogadores..." rows="3"></textarea>
                 </div>
-                <div class="team-input-block" style="margin-bottom:15px;">
-                    <input type="text" placeholder="Nome do Time" class="t-name" value="Time B" style="width:100%; padding:8px; margin-bottom:5px; border-radius:5px; border:1px solid #ccc; font-weight:bold;">
-                    <textarea class="t-players" placeholder="Lista de jogadores..."></textarea>
+                <div class="team-input-block">
+                    <input type="text" placeholder="Nome do Time" class="t-name" value="Time B">
+                    <textarea class="t-players" placeholder="Lista de jogadores..." rows="3"></textarea>
                 </div>
             </div>
+            
             <button class="btn-add" onclick="addTimeInput()">+ ADICIONAR TIME</button>
             <button class="btn-principal" onclick="iniciarCampeonato()">COMEÇAR JOGO</button>
         </div>
-
+        
+        <!-- Área Ajuda -->
         <div id="areaA" style="display:none">
             <div class="help-title">☕ Apoie o Projeto</div>
             <div class="help-card" style="border-left-color: #f1c40f; background: #fffdf0;">
@@ -168,7 +736,7 @@
                 <p><b>Chave PIX (E-mail):</b><br>contatohoradapelada@gmail.com</p>
                 <p><i>Qualquer valor ajuda muito na evolução do site. Obrigado!</i></p>
             </div>
-
+            
             <div class="help-title">📋 Guia Rápido</div>
             <div class="help-card">
                 <b>Como usar o sorteador?</b>
@@ -187,380 +755,544 @@
                 <p>Lateral cobrado com os pés. Goleiro tem 4 segundos. Limite de 5 faltas coletivas por tempo.</p>
             </div>
         </div>
-
-<section id="areaB" style="display:none">
-            
-            <article class="blog-post lazy-blog">
+        
+        <!-- Área Blog -->
+        <section id="areaB" style="display:none">
+            <article class="blog-post active" data-index="1">
                 <h3>1. Guia Definitivo: Como Melhorar o Condicionamento Físico para o Futebol Amador</h3>
-                <p>O futebol amador, carinhosamente chamado de pelada, exige um esforço físico intermitente que difere de uma corrida constante. Para não cansar nos primeiros dez minutos, o jogador precisa focar em treinos de HIIT (Treino Intervalado de Alta Intensidade). Isso simula os piques de velocidade seguidos de curtos períodos de descanso que ocorrem durante o jogo.</p>
+                <p>O futebol amador, carinhosamente chamado de pelada, exige um esforço físico intermitente que difere de uma corrida constante. Para não cansar nos primeiros dez minutos, o jogador precisa focar em treinos de HIIT (Treino Intervalado de Alta Intensidade).</p>
                 <h4>O Segredo da Respiração</h4>
-                <p>Muitos amadores cometem o erro de respirar apenas pela boca, o que acelera a fadiga. A técnica correta envolve a inspiração nasal profunda para filtrar e aquecer o ar, otimizando a oxigenação do sangue. Além disso, o fortalecimento do core (abdômen e lombar) permite que o jogador mantenha a postura correta mesmo sob exaustão, evitando dores nas costas após a partida.</p>
+                <p>Muitos amadores cometem o erro de respirar apenas pela boca, o que acelera a fadiga. A técnica correta envolve a inspiração nasal profunda para filtrar e aquecer o ar, otimizando a oxigenação do sangue.</p>
                 <ul>
                     <li>Realize treinos de tiro de 30 metros.</li>
-                    <li>Pratique o descanso ativo caminhando, nunca sentando logo após o pique.</li>
-                    <li>Fortaleça as panturrilhas para evitar cãibras comuns no segundo tempo.</li>
+                    <li>Pratique o descanso ativo caminhando.</li>
+                    <li>Fortaleça as panturrilhas para evitar cãibras.</li>
                 </ul>
             </article>
-
-            <article class="blog-post lazy-blog">
+            
+            <article class="blog-post" data-index="2">
                 <h3>2. Gestão de Grupos: Como Administrar sua Pelada no WhatsApp sem Conflitos</h3>
-                <p>Administrar um grupo de futebol pode ser uma tarefa ingrata. O segredo para o sucesso é a automação e regras rígidas. O uso de listas automáticas com horários de corte é essencial. Se o jogo é na quarta, a lista deve fechar na terça à noite. Isso permite que o organizador busque substitutos (os famosos "convidados") com antecedência caso o quórum não seja atingido.</p>
+                <p>Administrar um grupo de futebol pode ser uma tarefa ingrata. O segredo para o sucesso é a automação e regras rígidas. O uso de listas automáticas com horários de corte é essencial.</p>
                 <h4>Regra Financeira e Mensalistas</h4>
-                <p>O maior gargalo é o financeiro. Grupos saudáveis trabalham com o modelo de mensalistas, onde o valor da quadra é dividido fixamente, e os avulsos pagam um valor prêmio. Isso garante que a quadra esteja paga mesmo se alguém faltar. Utilize o <b>Hora da Pelada</b> para mostrar transparência no sorteio, evitando a percepção de que o administrador está favorecendo amigos na divisão dos times.</p>
+                <p>O maior gargalo é o financeiro. Grupos saudáveis trabalham com o modelo de mensalistas, onde o valor da quadra é dividido fixamente, e os avulsos pagam um valor prêmio.</p>
             </article>
-
-            <article class="blog-post lazy-blog">
+            
+            <article class="blog-post" data-index="3">
                 <h3>3. A Ciência do Sorteio: Por que o Equilíbrio dos Times é Vital para o Jogo</h3>
-                <p>Um jogo onde um time ganha de 10 a 0 não é divertido para ninguém. O equilíbrio técnico mantém a competitividade e o engajamento. Algoritmos de sorteio aleatório, como o presente em nossa ferramenta, removem o viés emocional. Quando os times são feitos "no dedo", o capitão tende a escolher os mais habilidosos primeiro, criando uma disparidade injusta.</p>
+                <p>Um jogo onde um time ganha de 10 a 0 não é divertido para ninguém. O equilíbrio técnico mantém a competitividade e o engajamento. Algoritmos de sorteio aleatório removem o viés emocional.</p>
                 <h4>Critérios de Nivelamento</h4>
-                <p>Para uma organização profissional, classifique os jogadores em categorias (A, B e C) antes de rodar o sorteio. Isso garante que cada time tenha pelo menos um marcador, um passador e um finalizador. O equilíbrio evita discussões e melhora o clima social do grupo, que é o objetivo principal do futebol entre amigos.</p>
+                <p>Para uma organização profissional, classifique os jogadores em categorias (A, B e C) antes de rodar o sorteio. Isso garante que cada time tenha pelo menos um marcador, um passador e um finalizador.</p>
             </article>
-
-            <article class="blog-post lazy-blog">
+            
+            <article class="blog-post" data-index="4">
                 <h3>4. Guia de Equipamentos: Como Escolher a Chuteira Certa para Cada Piso</h3>
-                <p>Usar uma chuteira de campo (travas altas) em um gramado sintético (society) é a receita certa para uma lesão de ligamento cruzado anterior (LCA). As travas altas não deslizam na borracha do sintético, travando o pé enquanto o corpo gira. No futsal, a sola deve ser de borracha natural (gum sole) para máxima aderência em quadras de taco ou cimento.</p>
+                <p>Usar uma chuteira de campo (travas altas) em um gramado sintético (society) é a receita certa para uma lesão de ligamento cruzado anterior (LCA). As travas altas não deslizam na borracha do sintético.</p>
                 <h4>Manutenção e Durabilidade</h4>
-                <p>Para que sua chuteira dure mais, nunca a seque ao sol, pois isso resseca o material sintético ou o couro, causando rachaduras. Após o jogo, limpe com um pano úmido e deixe secar à sombra em local ventilado. O uso de meias antiderrapantes também tem se tornado popular, pois evita que o pé deslize dentro do calçado, prevenindo bolhas.</p>
+                <p>Para que sua chuteira dure mais, nunca a seque ao sol, pois isso resseca o material sintético ou o couro, causando rachaduras. Após o jogo, limpe com um pano úmido.</p>
             </article>
-
-            <article class="blog-post lazy-blog">
+            
+            <article class="blog-post" data-index="5">
                 <h3>5. Táticas Modernas: Aplicando o 2-3-1 no Futebol Society</h3>
-                <p>O futebol society evoluiu. A formação 2-3-1 é considerada a mais equilibrada para o formato 7 vs 7. Ela oferece dois defensores fixos, um volante central que distribui o jogo e dois alas que apoiam tanto o ataque quanto a defesa. O "pivô" na frente serve como referência para segurar a bola e esperar a subida dos companheiros.</p>
+                <p>O futebol society evoluiu. A formação 2-3-1 é considerada a mais equilibrada para o formato 7 vs 7. Ela oferece dois defensores fixos, um volante central que distribui o jogo e dois alas.</p>
                 <h4>Transição Defensiva</h4>
-                <p>O maior erro no amador é o "efeito manada", onde todos correm atrás da bola. No 2-3-1, a disciplina posicional é chave. Quando o time perde a posse, os alas devem fechar o meio rapidamente para impedir o contra-ataque. O goleiro moderno também atua como um líbero, jogando com os pés para oferecer opção de passe e desafogar a pressão adversária.</p>
+                <p>O maior erro no amador é o "efeito manada", onde todos corren atrás da bola. No 2-3-1, a disciplina posicional é chave. Quando o time perde a posse, os alas devem fechar o meio rapidamente.</p>
             </article>
-
-            <article class="blog-post lazy-blog">
+            
+            <article class="blog-post" data-index="6">
                 <h3>6. Nutrição Esportiva: O que comer antes e depois da Pelada</h3>
-                <p>A performance em campo começa na cozinha. Duas horas antes do jogo, foque em carboidratos complexos (como batata doce ou macarrão integral) que liberam energia gradualmente. Evite gorduras e excesso de fibras, que podem causar desconforto gástrico durante os piques de alta intensidade.</p>
+                <p>A performance em campo começa na cozinha. Duas horas antes do jogo, foque em carboidratos complexos (como batata doce ou macarrão integral) que liberam energia gradualmente.</p>
                 <h4>Janela de Recuperação</h4>
-                <p>Após o apito final, o corpo entra em estado catabólico. É o momento de repor o glicogênio muscular com carboidratos simples e proteínas de rápida absorção. A hidratação deve ser contínua: para cada quilo perdido durante o exercício, deve-se ingerir cerca de 1,5 litros de água ou isotônico para recuperar os eletrólitos perdidos no suor.</p>
+                <p>Após o apito final, o corpo entra em estado catabólico. É o momento de repor o glicogênio muscular com carboidratos simples e proteínas de rápida absorção.</p>
             </article>
-
-            <article class="blog-post lazy-blog">
-                <h3>7. Lesões Comuns no Futebol: Prevenção e Tratamento de Primeiros Socorros</h3>
-                <p>Entorses de tornozelo e estiramentos na coxa são as lesões mais frequentes. A prevenção passa obrigatoriamente por um aquecimento neuromuscular de 10 a 15 minutos. Movimentos circulares nas articulações e trotes leves preparam os tendões para a carga do jogo.</p>
-                <h4>O Protocolo RICE</h4>
-                <p>Caso ocorra uma lesão leve, utilize o protocolo RICE: Repouso, Gelo (Ice), Compressão e Elevação. O gelo deve ser aplicado nas primeiras 48 horas para controlar o processo inflamatório. Nunca ignore uma dor persistente; o futebol amador não vale uma cirurgia ou meses de fisioterapia por falta de cuidado imediato.</p>
-            </article>
-
-            <article class="blog-post lazy-blog">
-                <h3>8. A Importância do Aspecto Psicológico e Fair Play</h3>
-                <p>O futebol é um esporte de contato e emoções à flor da pele. No entanto, o controle emocional é o que diferencia um bom jogador de um "brigão". O estresse do dia a dia não deve ser descarregado em campo. O respeito ao árbitro (mesmo que seja um colega) e aos adversários garante que a pelada continue existindo por anos.</p>
-                <h4>Liderança Positiva</h4>
-                <p>Incentivar um companheiro que errou um passe é muito mais eficaz do que gritar. Times que mantêm a moral alta tendem a buscar resultados impossíveis. O <b>Hora da Pelada</b> promove a união ao facilitar a organização, permitindo que os jogadores foquem apenas na diversão e no companheirismo.</p>
-            </article>
-
-            <article class="blog-post lazy-blog">
-                <h3>9. Fundamentos Técnicos: Como Melhorar seu Passe e Domínio</h3>
-                <p>Mesmo na pelada, a técnica individual faz a diferença. O domínio "orientado" (aquele que você já prepara o corpo para o próximo movimento) é a habilidade mais subestimada. Ao receber a bola, não a deixe parar morta nos pés; direcione-a para o espaço vazio.</p>
-                <ul>
-                    <li>Passe com a parte interna (chapada) para maior precisão.</li>
-                    <li>Mantenha o pé de apoio apontado para o alvo.</li>
-                    <li>Treine o uso da perna não dominante para se tornar um jogador completo.</li>
-                </ul>
-            </article>
-
-            <article class="blog-post lazy-blog">
-                <h3>10. O Papel do Goleiro no Futebol Moderno</h3>
-                <p>O goleiro não é mais apenas alguém que evita gols. No futebol society e futsal, ele é o início do ataque. Ter um goleiro que sabe jogar com os pés cria uma superioridade numérica (5 contra 4 ou 7 contra 6) que desarticula qualquer marcação individual.</p>
-                <h4>Posicionamento e Ângulos</h4>
-                <p>Fechar o ângulo é mais importante do que ter reflexos rápidos. Um goleiro bem posicionado faz defesas difíceis parecerem fáceis. A comunicação constante com a defesa ajuda a organizar a marcação e evita que atacantes entrem livres na área.</p>
-            </article>
-
-            <article class="blog-post lazy-blog">
-                <h3>11. Como Organizar um Torneio Interno de Curta Duração</h3>
-                <p>Se o seu grupo é grande, realizar um torneio "relâmpago" de um dia pode renovar os ânimos. Divida os jogadores em 4 times e faça semifinais e final. Isso aumenta a competitividade saudável e cria histórias para contar no churrasco pós-jogo.</p>
-                <h4>Premiações Symbolicas</h4>
-                <p>Não precisa de troféus caros. Muitas vezes, o direito de não pagar a mensalidade do próximo mês ou um "troféu caneco" já servem de motivação. O uso de um cronômetro digital preciso é fundamental para que nenhum time se sinta prejudicado pelo tempo de jogo.</p>
-            </article>
-
-            <article class="blog-post lazy-blog">
-                <h3>12. Hidratação e Performance: O que a ciência diz</h3>
-                <p>A desidratação de apenas 2% do peso corporal pode reduzir a performance esportiva em até 20%. Isso se traduz em passes errados e decisões lentas. Comece a se hidratar horas antes da partida, e não apenas quando sentir sede, pois a sede já é um sinal de desidratação leve.</p>
-                <h4>Isotônicos vs Água</h4>
-                <p>Em jogos de longa duração (mais de 60 minutos), a água pura pode não ser suficiente para repor o sódio e potássio. Os isotônicos ajudam a prevenir as famosas cãibras e mantêm os níveis de açúcar no sangue estáveis para evitar a "quebra" física no final do jogo.</p>
-            </article>
-
-            <article class="blog-post lazy-blog">
-                <h3>13. O Futebol como Ferramenta de Saúde Mental</h3>
-                <p>Além dos benefícios físicos, a pelada semanal é uma válvula de escape para o estresse do trabalho e da rotina. A interação social e a liberação de endorfina e dopamina durante o exercício combatem sintomas de ansiedade e depressão.</p>
-                <h4>Networking e Amizade</h4>
-                <p>Muitas oportunidades de negócios e amizades duradouras nascem nos campos de futebol. O senso de pertencimento a um grupo é um dos pilares do bem-estar humano. Ter um ambiente organizado ajuda a manter esses laços sem os desgastes de uma organização amadora e confusa.</p>
-            </article>
-
-            <article class="blog-post lazy-blog">
-                <h3>14. Regras do Futsal vs Society: Principais Diferenças</h3>
-                <p>É comum jogadores de society se confundirem ao jogar futsal e vice-versa. No futsal, a cobrança de lateral é feita com os pés e o goleiro tem o limite de 4 segundos para soltar a bola. Já no society, o lateral é com as mãos (na maioria das ligas) e não existe a regra dos 4 segundos de forma tão rígida.</p>
-                <h4>Faltas Coletivas</h4>
-                <p>No futsal, após a 5ª falta coletiva em um tempo, todas as faltas subsequentes resultam em tiro livre direto sem barreira. No society, as punições costumam envolver cartões temporários (2 ou 5 minutos fora), o que exige uma estratégia diferente para não deixar o time em desvantagem numérica.</p>
-            </article>
-
-            <article class="blog-post lazy-blog">
-                <h3>15. Análise Tática: Como vencer times tecnicamente superiores</h3>
-                <p>Se o seu time é mais fraco tecnicamente, a solução é o rigor tático e a compactação. Jogar com as linhas baixas e explorar o contra-ataque é a forma mais eficiente de vencer adversários "lisos". Force o adversário a chutar de longe e feche as linhas de passe centrais.</p>
-                <h4>Aproveitamento de Bolas Paradas</h4>
-                <p>Em jogos equilibrados, a bola parada decide. Treinar um posicionamento simples em escanteios pode garantir aquele gol salvador. Marcar individualmente os jogadores mais perigosos e fazer zona no primeiro pau é a estratégia defensiva mais sólida no futebol amador.</p>
-            </article>
-
-            <article class="blog-post lazy-blog">
-                <h3>16. O Futuro do Futebol Amador e a Tecnologia</h3>
-                <p>A tecnologia chegou para ficar na várzea. De aplicativos de sorteio como o <b>Hora da Pelada</b> até câmeras que gravam os melhores momentos, a experiência do peladeiro está se tornando profissional. Isso valoriza o esporte e incentiva mais pessoas a saírem do sedentarismo.</p>
-                <h4>Conclusão e Próximos Passos</h4>
-                <p>Organização é a palavra-chave. Um grupo que utiliza ferramentas digitais para gerir nomes, tempos e placares demonstra respeito pelo tempo dos participantes. Evolua sua pelada para o próximo nível e garanta que a única preocupação dos jogadores seja balançar as redes!</p>
-            </article>
-            <button id="loadMoreBtn" class="btn-add" onclick="loadMore()">
-  CARREGAR MAIS
-</button>
+            
+            <button id="loadMoreBtn" class="btn-add" onclick="loadMoreBlog()">CARREGAR MAIS ARTIGOS</button>
+        </section>
+        
+        <!-- Páginas Internas -->
+        <div id="pageSobre" class="page" style="display:none">
+            <h2 style="color: var(--verde); border-bottom: 2px solid var(--verde); padding-bottom: 5px; margin-bottom: 15px;">Sobre o Projeto</h2>
+            <p>O <b>Hora da Pelada</b> é um projeto independente desenvolvido integralmente por mim, com o objetivo de facilitar a vida de quem organiza e joga futebol amador.</p>
+            <p>A ideia surgiu da necessidade de ter um sorteador rápido e um placar funcional que pudesse ser acessado pelo celular na beira do campo, sem burocracia.</p>
+            <p>Como desenvolvedor único, busco sempre evoluir a ferramenta baseado no feedback dos peladeiros. Este site é feito de um apaixonado por futebol para outros apaixonados.</p>
+            <button class="btn-principal" onclick="goHome()" style="background:#888; margin-top:20px;">VOLTAR PARA INÍCIO</button>
         </div>
-    </div>
-
-    <div id="pageSobre" class="page-content">
-        <h2>Sobre o Projeto</h2>
-          <p>O <b>Hora da Pelada</b> é um projeto independente desenvolvido integralmente por mim, com o objetivo de facilitar a vida de quem organiza e joga futebol amador.</p>
-        <p>A ideia surgiu da necessidade de ter um sorteador rápido e um placar funcional que pudesse ser acessado pelo celular na beira do campo, sem burocracia.</p>
-        <p>Como desenvolvedor único, busco sempre evoluir a ferramenta baseado no feedback dos peladeiros. Este site é feito de um apaixonado por futebol para outros apaixonados.</p>
-        <button class="btn-principal" onclick="goHome()" style="background:#888;">VOLTAR</button>
-    </div>
-
-    <div id="pagePrivacidade" class="page-content">
-        <h2>Política de Privacidade</h2>
-        <p>Esta Política de Privacidade descreve como o Hora da Pelada coleta, usa e protege as informações dos usuários.</p>
         
-        <h4>1. Coleta de Dados e Cookies</h4>
-        <p>O Hora da Pelada utiliza cookies para melhorar a experiência do usuário e personalizar conteúdo. O Google, como fornecedor de terceiros, utiliza cookies para exibir anúncios em nosso site.</p>
-        
-        <h4>2. Cookie DART e Google AdSense</h4>
-        <p>O uso do cookie DART permite que o Google e seus parceiros exibam anúncios para nossos usuários com base em suas visitas ao Hora da Pelada.</p>
-
-        <h4>3. Proteção de Dados</h4>
-        <p>Não vendemos nem compartilhamos informações pessoais identificáveis com terceiros. As listas de nomes inseridas são processadas localmente no navegador.</p>
-        <h4>4. Consentimento</h4>
-<p>Ao utilizar o Hora da Pelada, o usuário concorda com esta Política de Privacidade e com o uso de cookies conforme descrito.</p>
-        <button class="btn-principal" onclick="goHome()" style="background:#888;">VOLTAR</button>
-    </div>
-
-    <div id="pageContato" class="page-content">
-        <h2>Contato & Redes Sociais</h2>
-        <p>Tem alguma dúvida, encontrou um bug ou quer sugerir uma nova funcionalidade? Estamos à disposição.</p>
-        
-        <div class="help-card">
-            <b>📸 Instagram Oficial:</b>
-            <p><a href="https://www.instagram.com/horadapelada.br?igsh=MWwxdnJ0NHQxeWU5MQ==" target="_blank" style="color: var(--v); text-decoration: none; font-weight: bold;">@horadapelada.br</a></p>
+        <div id="pagePrivacidade" class="page" style="display:none">
+            <h2 style="color: var(--verde); border-bottom: 2px solid var(--verde); padding-bottom: 5px; margin-bottom: 15px;">Política de Privacidade</h2>
+            <p>Esta Política de Privacidade descreve como o Hora da Pelada coleta, usa e protege as informações dos usuários.</p>
+            
+            <h4>1. Coleta de Dados e Cookies</h4>
+            <p>O Hora da Pelada utiliza cookies para melhorar a experiência do usuário e personalizar conteúdo. O Google, como fornecedor de terceiros, utiliza cookies para exibir anúncios.</p>
+            
+            <h4>2. Cookie DART e Google AdSense</h4>
+            <p>O uso do cookie DART permite que o Google e seus parceiros exibam anúncios para nossos usuários com base em suas visitas ao Hora da Pelada.</p>
+            
+            <h4>3. Proteção de Dados</h4>
+            <p>Não vendemos nem compartilhamos informações pessoais identificáveis com terceiros. As listas de nomes inseridas são processadas localmente no navegador.</p>
+            
+            <h4>4. Consentimento</h4>
+            <p>Ao utilizar o Hora da Pelada, o usuário concorda com esta Política de Privacidade e com o uso de cookies conforme descrito.</p>
+            
+            <button class="btn-principal" onclick="goHome()" style="background:#888; margin-top:20px;">VOLTAR PARA INÍCIO</button>
         </div>
-
-        <div class="help-card">
-            <b>📧 E-mail Oficial:</b>
-            <p>contatohoradapelada@gmail.com</p>
-        <button class="btn-principal" onclick="goHome()" style="background:#888;">VOLTAR</button>
-    </div>
-
-    <div id="jogo" style="display:none">
-        <div class="cron">
-            <div id="display" style="font-size:40px; font-family:monospace;">00:00:00</div>
-            <div style="display:flex; gap:10px; margin-top:10px; justify-content:center;">
-                <button onclick="playPause()" id="btn-p" style="padding:10px 20px; border-radius:5px; border:none; background:var(--v); color:white; font-weight:bold;">INICIAR</button>
-                <button onclick="resetCron()" style="padding:10px 20px; border-radius:5px; border:none; background:var(--r); color:white; font-weight:bold;">ZERAR</button>
+        
+        <div id="pageContato" class="page" style="display:none">
+            <h2 style="color: var(--verde); border-bottom: 2px solid var(--verde); padding-bottom: 5px; margin-bottom: 15px;">Contato & Redes Sociais</h2>
+            
+            <div class="help-card">
+                <b>📸 Instagram Oficial:</b>
+                <p><a href="https://www.instagram.com/horadapelada.br" target="_blank" style="color: var(--verde); text-decoration: none; font-weight: bold;">@horadapelada.br</a></p>
             </div>
+            
+            <div class="help-card">
+                <b>📧 E-mail Oficial:</b>
+                <p>contatohoradapelada@gmail.com</p>
+            </div>
+            
+            <button class="btn-principal" onclick="goHome()" style="background:#888; margin-top:20px;">VOLTAR PARA INÍCIO</button>
         </div>
-        <div id="placar-area"></div>
-        <div id="hist-comp" style="margin-top:20px; background:#f9f9f9; padding:10px; border-radius:8px; display:none;">
-            <b>Histórico do Campeonato</b>
-            <div id="hist-lista" style="font-size:12px; margin-top:5px;"></div>
+        
+        <!-- Jogo/Placar -->
+        <div id="jogo" class="page" style="display:none">
+            <div class="cron">
+                <div id="display">00:00:00</div>
+                <div class="cron-buttons">
+                    <button onclick="playPause()" id="btn-p" class="cron-btn start">INICIAR</button>
+                    <button onclick="resetCron()" class="cron-btn reset">ZERAR</button>
+                </div>
+            </div>
+            
+            <div id="placar-area"></div>
+            
+            <button onclick="salvarPartida()" class="btn-salvar">💾 SALVAR PARTIDA ATUAL</button>
+            
+            <div id="hist-comp" style="display: none;">
+                <div class="historico-header">
+                    <b style="font-size: 14px;">🏆 Histórico do Campeonato</b>
+                    <button onclick="limparHistorico()" class="btn-limpar">Limpar</button>
+                </div>
+                <div id="hist-lista"></div>
+            </div>
+            
+            <button class="btn-principal" onclick="goHome()" style="background:#888; margin-top:20px;">VOLTAR PARA INÍCIO</button>
         </div>
-        <button class="btn-principal" style="background:#888; margin-top:20px;" onclick="location.reload()">VOLTAR / NOVO JOGO</button>
     </div>
-
+    
     <footer>
         <span onclick="showPage('pageSobre')">Sobre</span> • 
-        <span onclick="showPage('pagePrivacidade')">Política de Privacidade</span> • 
+        <span onclick="showPage('pagePrivacidade')">Privacidade</span> • 
         <span onclick="showPage('pageContato')">Contato</span><br>
         © 2026 Hora da Pelada - Todos os direitos reservados.
     </footer>
 </div>
-<!-- BANNER DE COOKIES -->
+
+<!-- Cookie Banner -->
 <div id="cookieBanner">
-  <p>
-    Usamos cookies para melhorar sua experiência, personalizar conteúdo e
-    exibir anúncios relevantes, conforme nossa
-    <a href="politica-de-privacidade.html" target="_blank">
-      Política de Privacidade
-    </a>.
-  </p>
-
-  <button id="acceptCookies">Aceitar</button>
+    <p>
+        Usamos cookies para melhorar sua experiência, personalizar conteúdo e exibir anúncios relevantes.
+        <a href="javascript:void(0)" onclick="showPage('pagePrivacidade')">Política de Privacidade</a>.
+    </p>
+    <button id="acceptCookies">Aceitar</button>
 </div>
-<script defer>
-    let tempo = 0, cron, rodando = false;
 
+<script>
+    // Variáveis globais
+    let tempo = 0;
+    let cron = null;
+    let rodando = false;
+    let blogInit = false;
+    let blogPosts = [];
+    let visiblePosts = 3;
+    let partidaSalva = false; // Flag para controlar se já salvou a partida atual
+    let modoCampeonato = false; // Flag para saber se estamos em modo campeonato
+    
+    // Menu functions
     function toggleMenu() {
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
         sidebar.classList.toggle('active');
         overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
     }
-
+    
     function showPage(pageId) {
-        document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+        // Esconde todas as páginas
+        document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+        document.getElementById('areaS').style.display = 'none';
+        document.getElementById('areaC').style.display = 'none';
+        document.getElementById('areaA').style.display = 'none';
+        document.getElementById('areaB').style.display = 'none';
         document.getElementById('jogo').style.display = 'none';
-        document.getElementById(pageId).classList.add('active');
-        if(document.getElementById('sidebar').classList.contains('active')) toggleMenu();
-        window.scrollTo(0,0);
+        
+        // Mostra a página solicitada
+        if (pageId === 'mainUI') {
+            goHome();
+        } else {
+            document.getElementById(pageId).style.display = 'block';
+        }
+        
+        // Fecha o menu se estiver aberto
+        if (document.getElementById('sidebar').classList.contains('active')) {
+            toggleMenu();
+        }
+        
+        window.scrollTo(0, 0);
     }
-
+    
     function goHome() {
-        showPage('mainUI');
+        document.getElementById('areaS').style.display = 'block';
         selTab('S');
     }
-
-    function selTab(t){
-    document.getElementById('areaS').style.display = t=='S'?'block':'none';
-    document.getElementById('areaC').style.display = t=='C'?'block':'none';
-    document.getElementById('areaA').style.display = t=='A'?'block':'none';
-    document.getElementById('areaB').style.display = t=='B'?'block':'none'; 
-
-    document.getElementById('tabS').className = t=='S'?'tab-btn active':'tab-btn';
-    document.getElementById('tabC').className = t=='C'?'tab-btn active':'tab-btn';
-    document.getElementById('tabA').className = t=='A'?'tab-btn active':'tab-btn';
-    document.getElementById('tabB').className = t=='B'?'tab-btn active':'tab-btn';
-
-    // INICIALIZA O BLOG SOMENTE QUANDO ABRIR
-    if (t === 'B' && !blogInit) {
-  initBlogLazy();
-  blogInit = true;
-}
-    }
-
-    function addTimeInput() {
-        const div = document.createElement('div');
-        div.className = "team-input-block";
-        div.style.marginBottom = "15px";
-        div.innerHTML = `<input type="text" placeholder="Nome do Time" class="t-name" value="Time ${document.querySelectorAll('.t-name').length + 1}" style="width:100%; padding:8px; margin-bottom:5px; border-radius:5px; border:1px solid #ccc; font-weight:bold;">
-                         <textarea class="t-players" placeholder="Lista de jogadores..."></textarea>`;
-        document.getElementById('lista-times-input').appendChild(div);
-    }
-
-    function gerarSorteio() {
-        const txt = document.getElementById('nomes').value.split('\n').filter(n => n.trim()).sort(() => Math.random() - 0.5);
-        if(txt.length < 2) return alert("Adicione pelo menos 2 jogadores para sortear!");
-        const qtd = parseInt(document.getElementById('qtd').value);
-        let html = "";
-        for(let i=0, t=1; i < txt.length; i += qtd, t++) {
-            html += renderCard(`Time ${t}`, txt.slice(i, i + qtd));
+    
+    function selTab(tab) {
+        // Esconde todas as áreas
+        document.getElementById('areaS').style.display = 'none';
+        document.getElementById('areaC').style.display = 'none';
+        document.getElementById('areaA').style.display = 'none';
+        document.getElementById('areaB').style.display = 'none';
+        
+        // Ativa a área correspondente
+        switch(tab) {
+            case 'S':
+                document.getElementById('areaS').style.display = 'block';
+                modoCampeonato = false;
+                break;
+            case 'C':
+                document.getElementById('areaC').style.display = 'block';
+                break;
+            case 'A':
+                document.getElementById('areaA').style.display = 'block';
+                break;
+            case 'B':
+                document.getElementById('areaB').style.display = 'block';
+                if (!blogInit) {
+                    initBlog();
+                    blogInit = true;
+                }
+                break;
         }
-        mostrarJogo(html);
+        
+        // Atualiza botões das tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('tab' + tab).classList.add('active');
+        
+        window.scrollTo(0, 0);
     }
-
+    
+    // Sorteio functions
+    function gerarSorteio() {
+        const nomesText = document.getElementById('nomes').value;
+        const nomes = nomesText.split('\n')
+            .map(nome => nome.trim())
+            .filter(nome => nome.length > 0);
+        
+        if (nomes.length < 2) {
+            alert("Adicione pelo menos 2 jogadores para sortear!");
+            return;
+        }
+        
+        const qtdPorTime = parseInt(document.getElementById('qtd').value);
+        if (qtdPorTime < 2) {
+            alert("O número mínimo de jogadores por time é 2!");
+            return;
+        }
+        
+        // Embaralha os jogadores
+        const jogadoresEmbaralhados = [...nomes].sort(() => Math.random() - 0.5);
+        
+        let html = '';
+        let timeNum = 1;
+        
+        for (let i = 0; i < jogadoresEmbaralhados.length; i += qtdPorTime) {
+            const timeJogadores = jogadoresEmbaralhados.slice(i, i + qtdPorTime);
+            html += renderCard(`Time ${timeNum}`, timeJogadores);
+            timeNum++;
+        }
+        
+        // Mostra o jogo
+        mostrarJogo(html);
+        modoCampeonato = false;
+        document.getElementById('hist-comp').style.display = 'none';
+        partidaSalva = false;
+    }
+    
+    function addTimeInput() {
+        const container = document.getElementById('lista-times-input');
+        const timeCount = container.querySelectorAll('.team-input-block').length + 1;
+        
+        const div = document.createElement('div');
+        div.className = 'team-input-block';
+        div.innerHTML = `
+            <input type="text" placeholder="Nome do Time" class="t-name" value="Time ${String.fromCharCode(64 + timeCount)}">
+            <textarea class="t-players" placeholder="Lista de jogadores..." rows="3"></textarea>
+        `;
+        
+        container.appendChild(div);
+    }
+    
     function iniciarCampeonato() {
-        let html = "";
-        document.querySelectorAll('.team-input-block').forEach(b => {
-            const nome = b.querySelector('.t-name').value;
-            const jogs = b.querySelector('.t-players').value.split('\n').filter(n => n.trim());
-            html += renderCard(nome, jogs);
+        const timeBlocks = document.querySelectorAll('.team-input-block');
+        let html = '';
+        
+        timeBlocks.forEach(block => {
+            const nomeTime = block.querySelector('.t-name').value || 'Time Sem Nome';
+            const jogadoresText = block.querySelector('.t-players').value;
+            const jogadores = jogadoresText.split('\n')
+                .map(j => j.trim())
+                .filter(j => j.length > 0);
+            
+            if (jogadores.length > 0) {
+                html += renderCard(nomeTime, jogadores);
+            }
         });
-        document.getElementById('hist-comp').style.display = 'block';
+        
+        if (html === '') {
+            alert("Adicione pelo menos um time com jogadores!");
+            return;
+        }
+        
+        // Mostra o jogo
         mostrarJogo(html);
+        modoCampeonato = true;
+        
+        // Mostra o histórico vazio
+        document.getElementById('hist-comp').style.display = 'block';
+        document.getElementById('hist-lista').innerHTML = '<div style="color: #666; font-style: italic;">Nenhuma partida salva ainda</div>';
+        partidaSalva = false;
     }
-
-    function renderCard(titulo, jogs) {
-        let h = `<div class="t-card"><div class="t-h"><span>${titulo}</span><div class="cnt-group"><button class="btn-c" onclick="alt(this,-1)">-</button><b class="pts t-pts">0</b><button class="btn-c" onclick="alt(this,1)">+</button></div></div>`;
-        jogs.forEach(j => {
-            h += `<div class="j-i"><span>${j}</span><div class="cnt-group"><button class="btn-c" onclick="alt(this,-1,true)">-</button><b class="pts j-pts">0</b><button class="btn-c" onclick="alt(this,1,true)">+</button></div></div>`;
+    
+    function renderCard(titulo, jogadores) {
+        let html = `
+            <div class="t-card">
+                <div class="t-header">
+                    <span>${titulo}</span>
+                    <div class="contador-group">
+                        <button class="btn-contador" onclick="alterarPontos(this, -1)">-</button>
+                        <b class="pontos t-pts">0</b>
+                        <button class="btn-contador" onclick="alterarPontos(this, 1)">+</button>
+                    </div>
+                </div>
+        `;
+        
+        jogadores.forEach(jogador => {
+            html += `
+                <div class="jogador-item">
+                    <span>${jogador}</span>
+                    <div class="contador-group">
+                        <button class="btn-contador" onclick="alterarPontos(this, -1, true)">-</button>
+                        <b class="pontos j-pts">0</b>
+                        <button class="btn-contador" onclick="alterarPontos(this, 1, true)">+</button>
+                    </div>
+                </div>
+            `;
         });
-        return h + "</div>";
+        
+        html += '</div>';
+        return html;
     }
-
-    function alt(btn, v, isJ) {
-        let p = btn.parentElement.querySelector('.pts');
-        let n = parseInt(p.innerText) + v;
-        if(n >= 0) {
-            p.innerText = n;
-            if(isJ) {
-                let card = btn.closest('.t-card'), total = 0;
-                card.querySelectorAll('.j-pts').forEach(s => total += parseInt(s.innerText));
-                card.querySelector('.t-pts').innerText = total;
+    
+    function alterarPontos(botao, valor, isJogador = false) {
+        const pontosElement = botao.parentElement.querySelector('.pontos');
+        let pontosAtuais = parseInt(pontosElement.textContent);
+        let novosPontos = pontosAtuais + valor;
+        
+        if (novosPontos >= 0) {
+            pontosElement.textContent = novosPontos;
+            
+            if (isJogador) {
+                // Atualiza pontos do time
+                const card = botao.closest('.t-card');
+                let totalTime = 0;
+                card.querySelectorAll('.j-pts').forEach(jpts => {
+                    totalTime += parseInt(jpts.textContent);
+                });
+                card.querySelector('.t-pts').textContent = totalTime;
             }
         }
     }
-
+    
     function mostrarJogo(html) {
         document.getElementById('placar-area').innerHTML = html;
-        document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+        
+        // Esconde todas as áreas e mostra apenas o jogo
+        document.getElementById('areaS').style.display = 'none';
+        document.getElementById('areaC').style.display = 'none';
+        document.getElementById('areaA').style.display = 'none';
+        document.getElementById('areaB').style.display = 'none';
         document.getElementById('jogo').style.display = 'block';
-        window.scrollTo(0,0);
+        
+        // Reseta o cronômetro
+        resetCron();
+        
+        window.scrollTo(0, 0);
     }
-
-    function playPause() {
-        if(!rodando) {
-            rodando = true;
-            document.getElementById('btn-p').innerText = "PAUSAR";
-            cron = setInterval(() => { tempo++; updDisplay(); }, 1000);
-        } else {
-            rodando = false; clearInterval(cron);
-            document.getElementById('btn-p').innerText = "RETOMAR";
+    
+    // Função para salvar partida manualmente
+    function salvarPartida() {
+        if (partidaSalva) {
+            alert("Esta partida já foi salva!");
+            return;
+        }
+        
+        const cards = document.querySelectorAll('.t-card');
+        if (cards.length < 2) {
+            alert("É necessário pelo menos 2 times para salvar uma partida!");
+            return;
+        }
+        
+        const time1 = cards[0].querySelector('.t-header span').textContent;
+        const pontos1 = cards[0].querySelector('.t-pts').textContent;
+        const time2 = cards[1].querySelector('.t-header span').textContent;
+        const pontos2 = cards[1].querySelector('.t-pts').textContent;
+        
+        const agora = new Date();
+        const hora = agora.getHours().toString().padStart(2, '0');
+        const minuto = agora.getMinutes().toString().padStart(2, '0');
+        const duracao = document.getElementById('display').textContent;
+        
+        // Remove a mensagem "Nenhuma partida salva ainda" se existir
+        const histLista = document.getElementById('hist-lista');
+        if (histLista.innerHTML.includes('Nenhuma partida salva ainda')) {
+            histLista.innerHTML = '';
+        }
+        
+        const historicoItem = document.createElement('div');
+        historicoItem.innerHTML = `
+            <span>${hora}:${minuto} - ${time1} ${pontos1} x ${pontos2} ${time2}</span>
+            <small style="color: #666;">(${duracao})</small>
+        `;
+        document.getElementById('hist-lista').prepend(historicoItem);
+        
+        partidaSalva = true;
+        
+        // Mostra confirmação
+        alert(`Partida salva no histórico!\n${time1} ${pontos1} x ${pontos2} ${time2}`);
+    }
+    
+    // Função para limpar histórico
+    function limparHistorico() {
+        if (confirm("Tem certeza que deseja limpar todo o histórico?")) {
+            document.getElementById('hist-lista').innerHTML = '<div style="color: #666; font-style: italic;">Nenhuma partida salva ainda</div>';
         }
     }
-
+    
+    // Cronômetro functions
+    function playPause() {
+        const btn = document.getElementById('btn-p');
+        
+        if (!rodando) {
+            rodando = true;
+            btn.textContent = "PAUSAR";
+            cron = setInterval(() => {
+                tempo++;
+                atualizarDisplay();
+            }, 1000);
+        } else {
+            rodando = false;
+            clearInterval(cron);
+            btn.textContent = "RETOMAR";
+        }
+    }
+    
     function resetCron() {
-        if(tempo > 0 && document.getElementById('hist-comp').style.display == 'block') {
-            const cards = document.querySelectorAll('.t-card');
-            if(cards.length >= 2) {
-                const log = `${cards[0].querySelector('span').innerText} ${cards[0].querySelector('.t-pts').innerText} x ${cards[1].querySelector('.t-pts').innerText} ${cards[1].querySelector('span').innerText}`;
-                const item = document.createElement('div');
-                item.innerText = `${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})} - ${log}`;
-                document.getElementById('hist-lista').prepend(item);
+        rodando = false;
+        clearInterval(cron);
+        tempo = 0;
+        atualizarDisplay();
+        document.getElementById('btn-p').textContent = "INICIAR";
+        partidaSalva = false; // Reseta flag ao zerar cronômetro
+    }
+    
+    function atualizarDisplay() {
+        const horas = Math.floor(tempo / 3600);
+        const minutos = Math.floor((tempo % 3600) / 60);
+        const segundos = tempo % 60;
+        
+        document.getElementById('display').textContent = 
+            `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+    }
+    
+    // Blog functions
+    function initBlog() {
+        blogPosts = document.querySelectorAll('#areaB .blog-post');
+        visiblePosts = 3;
+        
+        blogPosts.forEach((post, index) => {
+            if (index < visiblePosts) {
+                post.style.display = 'block';
+                post.classList.add('active');
+            } else {
+                post.style.display = 'none';
+                post.classList.remove('active');
+            }
+        });
+        
+        const loadBtn = document.getElementById('loadMoreBtn');
+        if (blogPosts.length > visiblePosts) {
+            loadBtn.style.display = 'block';
+        } else {
+            loadBtn.style.display = 'none';
+        }
+    }
+    
+    function loadMoreBlog() {
+        const postsToShow = Math.min(visiblePosts + 3, blogPosts.length);
+        
+        for (let i = visiblePosts; i < postsToShow; i++) {
+            if (blogPosts[i]) {
+                blogPosts[i].style.display = 'block';
+                blogPosts[i].classList.add('active');
             }
         }
-        tempo = 0; clearInterval(cron);
-        rodando = false; updDisplay();
-        document.getElementById('btn-p').innerText = "INICIAR";
+        
+        visiblePosts = postsToShow;
+        
+        if (visiblePosts >= blogPosts.length) {
+            document.getElementById('loadMoreBtn').style.display = 'none';
+        }
     }
-
-    function updDisplay() {
-        let h = Math.floor(tempo/3600), m = Math.floor((tempo%3600)/60), s = tempo%60;
-        document.getElementById('display').innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    
+    // Cookie functions
+    function initCookies() {
+        const banner = document.getElementById('cookieBanner');
+        const acceptBtn = document.getElementById('acceptCookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                banner.style.display = 'flex';
+            }, 1000);
+        }
+        
+        acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            banner.style.display = 'none';
+        });
     }
-  let blogInit = false;
-let posts = [];
-let visible = 3;
-function initBlogLazy() {
-  posts = document
-  .getElementById('areaB')
-  .querySelectorAll('.lazy-blog');
-  visible = 3;
-
-  posts.forEach((post, index) => {
-    post.style.display = index < visible ? 'block' : 'none';
-  });
-
-  const btn = document.getElementById('loadMoreBtn');
-  if (btn) btn.style.display = posts.length > visible ? 'block' : 'none';
-}
-  function loadMore() {
-    for (let i = visible; i < visible + 3 && i < posts.length; i++) {
-      posts[i].style.display = 'block';
-    }
-    visible += 3;
-
-    if (visible >= posts.length) {
-      const btn = document.getElementById('loadMoreBtn');
-      if (btn) btn.style.display = 'none';
-    }
-  }
-  document.addEventListener("DOMContentLoaded", function () {
-    const banner = document.getElementById("cookieBanner");
-    const btn = document.getElementById("acceptCookies");
-
-    if (!localStorage.getItem("cookiesAccepted")) {
-      banner.style.display = "block";
-    }
-
-    btn.addEventListener("click", function () {
-      localStorage.setItem("cookiesAccepted", "true");
-      banner.style.display = "none";
+    
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializa tabs
+        selTab('S');
+        
+        // Inicializa cookies
+        initCookies();
+        
+        // Inicializa cronômetro
+        atualizarDisplay();
+        
+        // Configura botões do footer
+        document.querySelectorAll('footer span').forEach(span => {
+            span.style.cursor = 'pointer';
+        });
+        
+        console.log('Hora da Pelada carregado com sucesso!');
     });
-  });
-
+    
+    // Previne erro ao clicar em links do menu antes do DOM carregar
+    window.onload = function() {
+        document.querySelectorAll('.sidebar li').forEach(item => {
+            item.style.cursor = 'pointer';
+        });
+    };
 </script>
 </body>
 </html>
