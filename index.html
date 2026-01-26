@@ -249,6 +249,15 @@
             to { opacity: 1; }
         }
         
+        /* Áreas principais */
+        .main-area {
+            display: none;
+        }
+        
+        .main-area.active {
+            display: block;
+        }
+        
         /* Sorteio Area */
         textarea {
             width: 100%;
@@ -355,6 +364,10 @@
             display: none;
         }
         
+        #areaB.active {
+            display: block;
+        }
+        
         .blog-post {
             margin-bottom: 30px;
             padding-bottom: 20px;
@@ -368,21 +381,21 @@
         
         .blog-post h3 {
             color: var(--verde);
-            font-size: 18px;
+            font-size: 16px;
             margin-bottom: 10px;
             margin-top: 0;
         }
         
         .blog-post h4 {
             color: var(--azul);
-            font-size: 16px;
+            font-size: 14px;
             margin: 15px 0 5px 0;
         }
         
         .blog-post p {
-            font-size: 14px;
+            font-size: 13px;
             color: #444;
-            line-height: 1.6;
+            line-height: 1.5;
             margin-bottom: 10px;
             text-align: justify;
         }
@@ -393,15 +406,56 @@
         }
         
         .blog-post li {
-            margin-bottom: 8px;
-            line-height: 1.6;
-            font-size: 14px;
+            margin-bottom: 5px;
+            line-height: 1.4;
+            font-size: 13px;
             color: #444;
         }
         
         #loadMoreBtn {
             display: none;
             width: 100%;
+            margin-top: 20px;
+        }
+        
+        /* Blog Navigation */
+        .blog-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .blog-nav-btn {
+            padding: 8px 15px;
+            background: #f1f1f1;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--azul);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .blog-nav-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .blog-nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .blog-counter {
+            font-size: 13px;
+            color: #666;
+            align-self: center;
+            font-weight: bold;
         }
         
         /* Jogo/Placar */
@@ -519,7 +573,7 @@
             background: #2980b9;
         }
         
-        /* SEO Content */
+        /* SEO Content - SOMENTE NA ÁREA SORTEIO */
         .seo-content {
             margin-top: 30px;
             border-top: 1px solid #eee;
@@ -639,6 +693,10 @@
                 width: 250px;
                 right: -250px;
             }
+            
+            .blog-post h3 {
+                font-size: 15px;
+            }
         }
     </style>
 </head>
@@ -688,7 +746,7 @@
     
     <div class="content">
         <!-- Área Sorteio -->
-        <div id="areaS">
+        <div id="areaS" class="main-area active">
             <textarea id="nomes" placeholder="Cole a lista de jogadores aqui (um por linha)...&#10;Ex:&#10;João&#10;Pedro&#10;Lucas"></textarea>
             
             <div class="input-group">
@@ -711,7 +769,7 @@
         </div>
         
         <!-- Área Campeonato -->
-        <div id="areaC" style="display:none">
+        <div id="areaC" class="main-area">
             <div id="lista-times-input">
                 <div class="team-input-block">
                     <input type="text" placeholder="Nome do Time" class="t-name" value="Time A">
@@ -728,7 +786,7 @@
         </div>
         
         <!-- Área Ajuda -->
-        <div id="areaA" style="display:none">
+        <div id="areaA" class="main-area">
             <div class="help-title">☕ Apoie o Projeto</div>
             <div class="help-card" style="border-left-color: #f1c40f; background: #fffdf0;">
                 <b>Pague um Café para o Desenvolvedor</b>
@@ -757,55 +815,20 @@
         </div>
         
         <!-- Área Blog -->
-        <section id="areaB" style="display:none">
-            <article class="blog-post active" data-index="1">
-                <h3>1. Guia Definitivo: Como Melhorar o Condicionamento Físico para o Futebol Amador</h3>
-                <p>O futebol amador, carinhosamente chamado de pelada, exige um esforço físico intermitente que difere de uma corrida constante. Para não cansar nos primeiros dez minutos, o jogador precisa focar em treinos de HIIT (Treino Intervalado de Alta Intensidade).</p>
-                <h4>O Segredo da Respiração</h4>
-                <p>Muitos amadores cometem o erro de respirar apenas pela boca, o que acelera a fadiga. A técnica correta envolve a inspiração nasal profunda para filtrar e aquecer o ar, otimizando a oxigenação do sangue.</p>
-                <ul>
-                    <li>Realize treinos de tiro de 30 metros.</li>
-                    <li>Pratique o descanso ativo caminhando.</li>
-                    <li>Fortaleça as panturrilhas para evitar cãibras.</li>
-                </ul>
-            </article>
+        <section id="areaB" class="main-area">
+            <div class="blog-nav">
+                <button class="blog-nav-btn" onclick="prevBlogPage()" id="prevBtn">
+                    ← Anterior
+                </button>
+                <span class="blog-counter" id="blogCounter">1/16</span>
+                <button class="blog-nav-btn" onclick="nextBlogPage()" id="nextBtn">
+                    Próximo →
+                </button>
+            </div>
             
-            <article class="blog-post" data-index="2">
-                <h3>2. Gestão de Grupos: Como Administrar sua Pelada no WhatsApp sem Conflitos</h3>
-                <p>Administrar um grupo de futebol pode ser uma tarefa ingrata. O segredo para o sucesso é a automação e regras rígidas. O uso de listas automáticas com horários de corte é essencial.</p>
-                <h4>Regra Financeira e Mensalistas</h4>
-                <p>O maior gargalo é o financeiro. Grupos saudáveis trabalham com o modelo de mensalistas, onde o valor da quadra é dividido fixamente, e os avulsos pagam um valor prêmio.</p>
-            </article>
-            
-            <article class="blog-post" data-index="3">
-                <h3>3. A Ciência do Sorteio: Por que o Equilíbrio dos Times é Vital para o Jogo</h3>
-                <p>Um jogo onde um time ganha de 10 a 0 não é divertido para ninguém. O equilíbrio técnico mantém a competitividade e o engajamento. Algoritmos de sorteio aleatório removem o viés emocional.</p>
-                <h4>Critérios de Nivelamento</h4>
-                <p>Para uma organização profissional, classifique os jogadores em categorias (A, B e C) antes de rodar o sorteio. Isso garante que cada time tenha pelo menos um marcador, um passador e um finalizador.</p>
-            </article>
-            
-            <article class="blog-post" data-index="4">
-                <h3>4. Guia de Equipamentos: Como Escolher a Chuteira Certa para Cada Piso</h3>
-                <p>Usar uma chuteira de campo (travas altas) em um gramado sintético (society) é a receita certa para uma lesão de ligamento cruzado anterior (LCA). As travas altas não deslizam na borracha do sintético.</p>
-                <h4>Manutenção e Durabilidade</h4>
-                <p>Para que sua chuteira dure mais, nunca a seque ao sol, pois isso resseca o material sintético ou o couro, causando rachaduras. Após o jogo, limpe com um pano úmido.</p>
-            </article>
-            
-            <article class="blog-post" data-index="5">
-                <h3>5. Táticas Modernas: Aplicando o 2-3-1 no Futebol Society</h3>
-                <p>O futebol society evoluiu. A formação 2-3-1 é considerada a mais equilibrada para o formato 7 vs 7. Ela oferece dois defensores fixos, um volante central que distribui o jogo e dois alas.</p>
-                <h4>Transição Defensiva</h4>
-                <p>O maior erro no amador é o "efeito manada", onde todos corren atrás da bola. No 2-3-1, a disciplina posicional é chave. Quando o time perde a posse, os alas devem fechar o meio rapidamente.</p>
-            </article>
-            
-            <article class="blog-post" data-index="6">
-                <h3>6. Nutrição Esportiva: O que comer antes e depois da Pelada</h3>
-                <p>A performance em campo começa na cozinha. Duas horas antes do jogo, foque em carboidratos complexos (como batata doce ou macarrão integral) que liberam energia gradualmente.</p>
-                <h4>Janela de Recuperação</h4>
-                <p>Após o apito final, o corpo entra em estado catabólico. É o momento de repor o glicogênio muscular com carboidratos simples e proteínas de rápida absorção.</p>
-            </article>
-            
-            <button id="loadMoreBtn" class="btn-add" onclick="loadMoreBlog()">CARREGAR MAIS ARTIGOS</button>
+            <div id="blogContent">
+                <!-- Conteúdo do blog será carregado aqui via JavaScript -->
+            </div>
         </section>
         
         <!-- Páginas Internas -->
@@ -902,9 +925,10 @@
     let rodando = false;
     let blogInit = false;
     let blogPosts = [];
-    let visiblePosts = 3;
-    let partidaSalva = false; // Flag para controlar se já salvou a partida atual
-    let modoCampeonato = false; // Flag para saber se estamos em modo campeonato
+    let currentBlogPage = 1;
+    let totalBlogPages = 16;
+    let partidaSalva = false;
+    let modoCampeonato = false;
     
     // Menu functions
     function toggleMenu() {
@@ -915,13 +939,15 @@
     }
     
     function showPage(pageId) {
+        // Esconde todas as áreas principais
+        document.querySelectorAll('.main-area').forEach(area => {
+            area.classList.remove('active');
+        });
+        
         // Esconde todas as páginas
-        document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-        document.getElementById('areaS').style.display = 'none';
-        document.getElementById('areaC').style.display = 'none';
-        document.getElementById('areaA').style.display = 'none';
-        document.getElementById('areaB').style.display = 'none';
-        document.getElementById('jogo').style.display = 'none';
+        document.querySelectorAll('.page').forEach(page => {
+            page.style.display = 'none';
+        });
         
         // Mostra a página solicitada
         if (pageId === 'mainUI') {
@@ -929,6 +955,11 @@
         } else {
             document.getElementById(pageId).style.display = 'block';
         }
+        
+        // Atualiza tabs para refletir que nenhuma está ativa
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
         
         // Fecha o menu se estiver aberto
         if (document.getElementById('sidebar').classList.contains('active')) {
@@ -939,33 +970,36 @@
     }
     
     function goHome() {
-        document.getElementById('areaS').style.display = 'block';
         selTab('S');
     }
     
     function selTab(tab) {
-        // Esconde todas as áreas
-        document.getElementById('areaS').style.display = 'none';
-        document.getElementById('areaC').style.display = 'none';
-        document.getElementById('areaA').style.display = 'none';
-        document.getElementById('areaB').style.display = 'none';
+        // Esconde todas as áreas principais
+        document.querySelectorAll('.main-area').forEach(area => {
+            area.classList.remove('active');
+        });
+        
+        // Esconde todas as páginas
+        document.querySelectorAll('.page').forEach(page => {
+            page.style.display = 'none';
+        });
         
         // Ativa a área correspondente
         switch(tab) {
             case 'S':
-                document.getElementById('areaS').style.display = 'block';
+                document.getElementById('areaS').classList.add('active');
                 modoCampeonato = false;
                 break;
             case 'C':
-                document.getElementById('areaC').style.display = 'block';
+                document.getElementById('areaC').classList.add('active');
                 break;
             case 'A':
-                document.getElementById('areaA').style.display = 'block';
+                document.getElementById('areaA').classList.add('active');
                 break;
             case 'B':
-                document.getElementById('areaB').style.display = 'block';
+                document.getElementById('areaB').classList.add('active');
                 if (!blogInit) {
-                    initBlog();
+                    loadBlogPost(1);
                     blogInit = true;
                 }
                 break;
@@ -976,6 +1010,185 @@
         document.getElementById('tab' + tab).classList.add('active');
         
         window.scrollTo(0, 0);
+    }
+    
+    // Blog functions
+    function loadBlogPost(pageNumber) {
+        currentBlogPage = pageNumber;
+        const blogContent = document.getElementById('blogContent');
+        const blogCounter = document.getElementById('blogCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        // Atualiza contador
+        blogCounter.textContent = `${pageNumber}/${totalBlogPages}`;
+        
+        // Habilita/desabilita botões
+        prevBtn.disabled = pageNumber <= 1;
+        nextBtn.disabled = pageNumber >= totalBlogPages;
+        
+        // Carrega o conteúdo do artigo
+        const article = getBlogArticle(pageNumber);
+        blogContent.innerHTML = `
+            <article class="blog-post active">
+                <h3>${article.title}</h3>
+                ${article.content}
+            </article>
+        `;
+        
+        window.scrollTo(0, 0);
+    }
+    
+    function getBlogArticle(pageNumber) {
+        const articles = [
+            {
+                title: "1. Guia Definitivo: Como Melhorar o Condicionamento Físico para o Futebol Amador",
+                content: `
+                    <p>O futebol amador, carinhosamente chamado de pelada, exige um esforço físico intermitente que difere de uma corrida constante. Para não cansar nos primeiros dez minutos, o jogador precisa focar em treinos de HIIT (Treino Intervalado de Alta Intensidade).</p>
+                    <h4>O Segredo da Respiração</h4>
+                    <p>Muitos amadores cometem o erro de respirar apenas pela boca, o que acelera a fadiga. A técnica correta envolve a inspiração nasal profunda para filtrar e aquecer o ar, otimizando a oxigenação do sangue.</p>
+                    <ul>
+                        <li>Realize treinos de tiro de 30 metros.</li>
+                        <li>Pratique o descanso ativo caminhando.</li>
+                        <li>Fortaleça as panturrilhas para evitar cãibras.</li>
+                    </ul>
+                `
+            },
+            {
+                title: "2. Gestão de Grupos: Como Administrar sua Pelada no WhatsApp sem Conflitos",
+                content: `
+                    <p>Administrar um grupo de futebol pode ser uma tarefa ingrata. O segredo para o sucesso é a automação e regras rígidas. O uso de listas automáticas com horários de corte é essencial.</p>
+                    <h4>Regra Financeira e Mensalistas</h4>
+                    <p>O maior gargalo é o financeiro. Grupos saudáveis trabalham com o modelo de mensalistas, onde o valor da quadra é dividido fixamente, e os avulsos pagam um valor prêmio.</p>
+                `
+            },
+            {
+                title: "3. A Ciência do Sorteio: Por que o Equilíbrio dos Times é Vital para o Jogo",
+                content: `
+                    <p>Um jogo onde um time ganha de 10 a 0 não é divertido para ninguém. O equilíbrio técnico mantém a competitividade e o engajamento. Algoritmos de sorteio aleatório removem o viés emocional.</p>
+                    <h4>Critérios de Nivelamento</h4>
+                    <p>Para uma organização profissional, classifique os jogadores em categorias (A, B e C) antes de rodar o sorteio. Isso garante que cada time tenha pelo menos um marcador, um passador e um finalizador.</p>
+                `
+            },
+            {
+                title: "4. Guia de Equipamentos: Como Escolher a Chuteira Certa para Cada Piso",
+                content: `
+                    <p>Usar uma chuteira de campo (travas altas) em um gramado sintético (society) é a receita certa para uma lesão de ligamento cruzado anterior (LCA). As travas altas não deslizam na borracha do sintético.</p>
+                    <h4>Manutenção e Durabilidade</h4>
+                    <p>Para que sua chuteira dure mais, nunca a seque ao sol, pois isso resseca o material sintético ou o couro, causando rachaduras. Após o jogo, limpe com um pano úmido.</p>
+                `
+            },
+            {
+                title: "5. Táticas Modernas: Aplicando o 2-3-1 no Futebol Society",
+                content: `
+                    <p>O futebol society evoluiu. A formação 2-3-1 é considerada a mais equilibrada para o formato 7 vs 7. Ela oferece dois defensores fixos, um volante central que distribui o jogo e dois alas.</p>
+                    <h4>Transição Defensiva</h4>
+                    <p>O maior erro no amador é o "efeito manada", onde todos correm atrás da bola. No 2-3-1, a disciplina posicional é chave. Quando o time perde a posse, os alas devem fechar o meio rapidamente.</p>
+                `
+            },
+            {
+                title: "6. Nutrição Esportiva: O que comer antes e depois da Pelada",
+                content: `
+                    <p>A performance em campo começa na cozinha. Duas horas antes do jogo, foque em carboidratos complexos (como batata doce ou macarrão integral) que liberam energia gradualmente.</p>
+                    <h4>Janela de Recuperação</h4>
+                    <p>Após o apito final, o corpo entra em estado catabólico. É o momento de repor o glicogênio muscular com carboidratos simples e proteínas de rápida absorção.</p>
+                `
+            },
+            {
+                title: "7. Lesões Comuns no Futebol: Prevenção e Primeiros Socorros",
+                content: `
+                    <p>As lesões mais comuns no futebol amador são entorses de tornozelo, distensões musculares e contusões. Saber como prevenir e tratar pode evitar afastamentos prolongados.</p>
+                    <h4>Método PRICE</h4>
+                    <p>Para lesões agudas, siga o método PRICE: Proteção, Repouso, Gelo, Compressão e Elevação. Aplicar gelo nas primeiras 48 horas reduz o inchaço em até 40%.</p>
+                `
+            },
+            {
+                title: "8. Hidratação Inteligente: Água, Isotônicos e Suplementos",
+                content: `
+                    <p>A desidratação reduz o rendimento em 20%. Beba 500ml de água 2 horas antes do jogo e 150-200ml a cada 20 minutos durante a partida.</p>
+                    <h4>Quando Usar Isotônicos</h4>
+                    <p>Isotônicos são recomendados apenas para jogos com mais de 90 minutos ou em dias muito quentes. Para partidas curtas, água pura é suficiente.</p>
+                `
+            },
+            {
+                title: "9. Aquecimento Dinâmico: 10 Minutos para Evitar Lesões",
+                content: `
+                    <p>O aquecimento tradicional (corrida leve + alongamento estático) está ultrapassado. O aquecimento dinâmico prepara músculos e articulações para os movimentos específicos do futebol.</p>
+                    <h4>Roteiro de 10 Minutos</h4>
+                    <p>1. Corrida leve (2 min)<br>2. Polichinelos (30s)<br>3. Agachamentos (30s)<br>4. Rotação de quadril (30s cada lado)<br>5. Afundos (30s cada perna)</p>
+                `
+            },
+            {
+                title: "10. Escolhendo a Bola Perfeita: Tamanho, Material e Pressão",
+                content: `
+                    <p>Uma bola mal escolhida pode arruinar o jogo. Para futsal use tamanho 4 (circunferência 62-64cm). Para society use tamanho 5 (circunferência 68-70cm).</p>
+                    <h4>Pressão Ideal</h4>
+                    <p>A pressão ideal é 0,8 a 1,0 bar (8-10 psi). Uma bola murcha dificulta os passes longos, enquanto uma bola muito cheia causa impacto excessivo nas articulações.</p>
+                `
+            },
+            {
+                title: "11. Arbitragem Amadora: Como Resolver Conflitos Sem Juiz",
+                content: `
+                    <p>Em 85% das peladas não há árbitro oficial. Estabeleça regras claras: falta flagrante é tiro livre direto, bola na linha é escanteio, faltas são marcadas por consenso.</p>
+                    <h4>Sistema de Honra</h4>
+                    <p>Adote o sistema de "chamada de falta": quem sofre a falta marca. Se houver discordância, a bola volta para quem a tinha antes da jogada.</p>
+                `
+            },
+            {
+                title: "12. Psicologia do Futebol: Lidando com a Pressão e Frustração",
+                content: `
+                    <p>O futebol amador tem alta carga emocional. Aprenda a controlar a frustração após erros: respire fundo, foque no próximo lance, evite autocobrança excessiva.</p>
+                    <h4>Comunicação Positiva</h4>
+                    <p>Substitua críticas por incentivos. Em vez de "Não erra essa!", diga "Vamos lá, você consegue!". Isso aumenta a confiança da equipe em 30%.</p>
+                `
+            },
+            {
+                title: "13. Manutenção do Gramado Sintético: Como Preservar o Investimento",
+                content: `
+                    <p>Gramados sintéticos duram 8-10 anos com manutenção adequada. Escove semanalmente contra o sentido das fibras, remova detritos e aplique areia de sílica trimestralmente.</p>
+                    <h4>Proibições Importantes</h4>
+                    <p>Nunca use salto alto, não fume no gramado, não derrame óleo ou graxa. Estas ações reducem a vida útil em até 40%.</p>
+                `
+            },
+            {
+                title: "14. Vestuário Ideal: Tecidos, Camadas e Proteção Climática",
+                content: `
+                    <p>Evite algodão - ele retém suor e peso. Use poliéster ou poliamida que afastam a umidade da pele. Para frio, use três camadas: base térmica, isolante e corta-vento.</p>
+                    <h4>Caneleiras: Segurança ou Comodidade?</h4>
+                    <p>Prefira caneleiras com fixação em velcro e proteção de tornozelo. Elas previnem 60% das contusões na região sem limitar a mobilidade.</p>
+                `
+            },
+            {
+                title: "15. Organização de Torneios: Formato, Premiação e Cronograma",
+                content: `
+                    <p>Para torneios com até 8 times, use sistema de pontos corridos. Para 9-16 times, faça grupos + mata-mata. Defina premiação simbólica para manter o espírito amador.</p>
+                    <h4>Duração Ideal</h4>
+                    <p>Torneios de final de semana: 2 dias. Partidas de 25 minutos cada tempo com intervalo de 5 minutos. Máximo de 4 jogos por time no dia.</p>
+                `
+            },
+            {
+                title: "16. Recuperação Pós-Jogo: Alongamento, Massagem e Sono",
+                content: `
+                    <p>Os primeiros 30 minutos após o jogo são cruciais. Alongue os principais grupos musculares, beba 500ml de água e consuma proteína para reparo muscular.</p>
+                    <h4>Qualidade do Sono</h4>
+                    <p>Durma 7-8 horas após o jogo. O sono profundo aumenta a produção de hormônio do crescimento em 70%, acelerando a recuperação muscular.</p>
+                `
+            }
+        ];
+        
+        return articles[pageNumber - 1];
+    }
+    
+    function nextBlogPage() {
+        if (currentBlogPage < totalBlogPages) {
+            loadBlogPost(currentBlogPage + 1);
+        }
+    }
+    
+    function prevBlogPage() {
+        if (currentBlogPage > 1) {
+            loadBlogPost(currentBlogPage - 1);
+        }
     }
     
     // Sorteio functions
@@ -996,7 +1209,6 @@
             return;
         }
         
-        // Embaralha os jogadores
         const jogadoresEmbaralhados = [...nomes].sort(() => Math.random() - 0.5);
         
         let html = '';
@@ -1008,7 +1220,6 @@
             timeNum++;
         }
         
-        // Mostra o jogo
         mostrarJogo(html);
         modoCampeonato = false;
         document.getElementById('hist-comp').style.display = 'none';
@@ -1050,11 +1261,9 @@
             return;
         }
         
-        // Mostra o jogo
         mostrarJogo(html);
         modoCampeonato = true;
         
-        // Mostra o histórico vazio
         document.getElementById('hist-comp').style.display = 'block';
         document.getElementById('hist-lista').innerHTML = '<div style="color: #666; font-style: italic;">Nenhuma partida salva ainda</div>';
         partidaSalva = false;
@@ -1099,7 +1308,6 @@
             pontosElement.textContent = novosPontos;
             
             if (isJogador) {
-                // Atualiza pontos do time
                 const card = botao.closest('.t-card');
                 let totalTime = 0;
                 card.querySelectorAll('.j-pts').forEach(jpts => {
@@ -1114,10 +1322,11 @@
         document.getElementById('placar-area').innerHTML = html;
         
         // Esconde todas as áreas e mostra apenas o jogo
-        document.getElementById('areaS').style.display = 'none';
-        document.getElementById('areaC').style.display = 'none';
-        document.getElementById('areaA').style.display = 'none';
-        document.getElementById('areaB').style.display = 'none';
+        document.querySelectorAll('.main-area').forEach(area => {
+            area.classList.remove('active');
+        });
+        
+        // Mostra a página do jogo
         document.getElementById('jogo').style.display = 'block';
         
         // Reseta o cronômetro
@@ -1126,7 +1335,6 @@
         window.scrollTo(0, 0);
     }
     
-    // Função para salvar partida manualmente
     function salvarPartida() {
         if (partidaSalva) {
             alert("Esta partida já foi salva!");
@@ -1149,7 +1357,6 @@
         const minuto = agora.getMinutes().toString().padStart(2, '0');
         const duracao = document.getElementById('display').textContent;
         
-        // Remove a mensagem "Nenhuma partida salva ainda" se existir
         const histLista = document.getElementById('hist-lista');
         if (histLista.innerHTML.includes('Nenhuma partida salva ainda')) {
             histLista.innerHTML = '';
@@ -1164,11 +1371,9 @@
         
         partidaSalva = true;
         
-        // Mostra confirmação
         alert(`Partida salva no histórico!\n${time1} ${pontos1} x ${pontos2} ${time2}`);
     }
     
-    // Função para limpar histórico
     function limparHistorico() {
         if (confirm("Tem certeza que deseja limpar todo o histórico?")) {
             document.getElementById('hist-lista').innerHTML = '<div style="color: #666; font-style: italic;">Nenhuma partida salva ainda</div>';
@@ -1199,7 +1404,7 @@
         tempo = 0;
         atualizarDisplay();
         document.getElementById('btn-p').textContent = "INICIAR";
-        partidaSalva = false; // Reseta flag ao zerar cronômetro
+        partidaSalva = false;
     }
     
     function atualizarDisplay() {
@@ -1209,46 +1414,6 @@
         
         document.getElementById('display').textContent = 
             `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-    }
-    
-    // Blog functions
-    function initBlog() {
-        blogPosts = document.querySelectorAll('#areaB .blog-post');
-        visiblePosts = 3;
-        
-        blogPosts.forEach((post, index) => {
-            if (index < visiblePosts) {
-                post.style.display = 'block';
-                post.classList.add('active');
-            } else {
-                post.style.display = 'none';
-                post.classList.remove('active');
-            }
-        });
-        
-        const loadBtn = document.getElementById('loadMoreBtn');
-        if (blogPosts.length > visiblePosts) {
-            loadBtn.style.display = 'block';
-        } else {
-            loadBtn.style.display = 'none';
-        }
-    }
-    
-    function loadMoreBlog() {
-        const postsToShow = Math.min(visiblePosts + 3, blogPosts.length);
-        
-        for (let i = visiblePosts; i < postsToShow; i++) {
-            if (blogPosts[i]) {
-                blogPosts[i].style.display = 'block';
-                blogPosts[i].classList.add('active');
-            }
-        }
-        
-        visiblePosts = postsToShow;
-        
-        if (visiblePosts >= blogPosts.length) {
-            document.getElementById('loadMoreBtn').style.display = 'none';
-        }
     }
     
     // Cookie functions
@@ -1270,8 +1435,11 @@
     
     // Inicialização
     document.addEventListener('DOMContentLoaded', function() {
-        // Inicializa tabs
-        selTab('S');
+        // Inicializa tabs - mostra apenas a área de sorteio
+        document.getElementById('areaS').classList.add('active');
+        document.getElementById('areaC').classList.remove('active');
+        document.getElementById('areaA').classList.remove('active');
+        document.getElementById('areaB').classList.remove('active');
         
         // Inicializa cookies
         initCookies();
@@ -1283,11 +1451,8 @@
         document.querySelectorAll('footer span').forEach(span => {
             span.style.cursor = 'pointer';
         });
-        
-        console.log('Hora da Pelada carregado com sucesso!');
     });
     
-    // Previne erro ao clicar em links do menu antes do DOM carregar
     window.onload = function() {
         document.querySelectorAll('.sidebar li').forEach(item => {
             item.style.cursor = 'pointer';
