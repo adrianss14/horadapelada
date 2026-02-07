@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Dicas de Futebol | Hora da Pelada</title>
+    <meta name="description" content="Dicas profissionais de futebol society: táticas, equipamentos, organização de peladas e muito mais para melhorar seu jogo.">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Mesmo estilo do index para consistência -->
+    <style>
+        :root {--verde:#27ae60;--azul:#2c3e50;--vermelho:#e74c3c;--fundo:#f0f2f5;--cinza:#888;} * {box-sizing:border-box;margin:0;padding:0;} body {font-family:'Segoe UI',Tahoma,sans-serif;background:var(--fundo);margin:0;display:flex;justify-content:center;min-height:100vh;} .container {width:100%;max-width:440px;background:#fff;min-height:100vh;position:relative;box-shadow:0 0 15px rgba(0,0,0,0.1);display:flex;flex-direction:column;}
+        
+        .header {padding:15px;border-bottom:1px solid #eee;background:#fff;} .header-top {display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;} .logo {display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;} .logo-icon {width:40px;height:40px;background:var(--verde);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;} .logo-text {margin:0;font-size:18px;line-height:1.2;} .logo-text b {display:block;font-size:16px;color:var(--verde);font-weight:normal;} .logo-text span {font-size:22px;font-weight:bold;color:#111;}
+        
+        .back-btn {background:none;border:none;cursor:pointer;padding:10px;color:var(--verde);font-weight:bold;font-size:16px;display:flex;align-items:center;gap:5px;}
+        
+        .content {padding:20px 15px;flex:1;}
+        .blog-title {font-size:24px;color:var(--azul);margin-bottom:10px;text-align:center;}
+        .blog-subtitle {font-size:14px;color:#666;text-align:center;margin-bottom:25px;border-bottom:1px solid #eee;padding-bottom:15px;}
+        
+        .article-list {display:flex;flex-direction:column;gap:15px;}
+        .article-card {background:#f9f9f9;border-radius:10px;padding:15px;border-left:4px solid var(--verde);text-decoration:none;display:block;transition:transform 0.3s, box-shadow 0.3s;}
+        .article-card:hover {transform:translateY(-3px);box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+        .article-card h3 {color:var(--azul);margin:0 0 8px 0;font-size:16px;}
+        .article-card p {color:#666;font-size:13px;margin:0;line-height:1.5;}
+        .article-card .meta {font-size:12px;color:var(--verde);margin-top:8px;font-weight:bold;}
+        
+        footer {padding:15px;text-align:center;font-size:12px;color:#888;border-top:1px solid #eee;background:#fff;}
+        
+        @media (max-width:480px) {.container {min-height:100vh;max-width:100%;}}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="header-top">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">⚽</div>
+                <div class="logo-text">
+                    <b>Hora da</b>
+                    <span>Pelada</span>
+                </div>
+            </a>
+            <button class="back-btn" onclick="window.location.href='index.html'">← Voltar</button>
+        </div>
+        
+        <h1 class="blog-title">Blog & Dicas</h1>
+        <p class="blog-subtitle">Dicas profissionais para melhorar sua pelada</p>
+    </div>
+    
+    <div class="content">
+        <div class="article-list">
+            
+            <!-- ARTIGO 1 -->
+            <a href="recuperacao-pos-jogo.html" class="article-card">
+                <h3>Recuperação Pós-Jogo: Alongamento e Técnicas</h3>
+                <p>Descubra os melhores exercícios de alongamento e recuperação após uma partida intensa para evitar lesões e dores musculares.</p>
+                <div class="meta">Leia em 3 min • Futebol Amador</div>
+            </a>
+            
+            <!-- ARTIGO 2 -->
+            <a href="organizacao-torneios.html" class="article-card">
+                <h3>Organização de Torneios: Formato e Premiação</h3>
+                <p>Guia completo para organizar torneios de futebol society com formatos competitivos e sistemas de premiação justos.</p>
+                <div class="meta">Leia em 4 min • Organização</div>
+            </a>
+            
+            <!-- ARTIGO 3 -->
+            <a href="vestuario-ideal.html" class="article-card">
+                <h3>Vestuário Ideal: Tecidos e Proteção</h3>
+                <p>Como escolher as roupas certas para jogar futebol em diferentes condições climáticas e tipos de piso.</p>
+                <div class="meta">Leia em 3 min • Equipamentos</div>
+            </a>
+            
+            <!-- ARTIGO 4 -->
+            <a href="manutencao-gramado.html" class="article-card">
+                <h3>Manutenção de Gramado Sintético: Preservação</h3>
+                <p>Cuidados essenciais para preservar gramados sintéticos e garantir maior durabilidade e segurança nas jogadas.</p>
+                <div class="meta">Leia em 3 min • Manutenção</div>
+            </a>
+            
+            <!-- ARTIGO 5 -->
+            <a href="psicologia-futebol.html" class="article-card">
+                <h3>Psicologia no Futebol: Lidando com Pressão</h3>
+                <p>Técnicas psicológicas para lidar com pressão, frustração e manter o foco durante partidas importantes.</p>
+                <div class="meta">Leia em 4 min • Psicologia Esportiva</div>
+            </a>
+            
+            <!-- ARTIGO 6 -->
+            <a href="arbitragem-amadora.html" class="article-card">
+                <h3>Arbitragem Amadora: Como Resolver Conflitos</h3>
+                <p>Dicas para arbitrar jogos amadores de forma justa e resolver conflitos entre jogadores sem prejudicar a diversão.</p>
+                <div class="meta">Leia em 3 min • Arbitragem</div>
+            </a>
+            
+            <!-- ARTIGO 7 -->
+            <a href="escolhendo-bola.html" class="article-card">
+                <h3>Escolhendo a Bola Perfeita: Tamanho e Material</h3>
+                <p>Como selecionar a bola ideal para futebol society considerando tamanho, material e condições de uso.</p>
+                <div class="meta">Leia em 3 min • Equipamentos</div>
+            </a>
+            
+            <!-- ARTIGO 8 -->
+            <a href="hidratacao-inteligente.html" class="article-card">
+                <h3>Hidratação Inteligente: Água e Isotônicos</h3>
+                <p>Plano de hidratação antes, durante e depois do jogo para manter o rendimento e evitar cãibras.</p>
+                <div class="meta">Leia em 3 min • Saúde</div>
+            </a>
+            
+            <!-- ARTIGO 9 -->
+            <a href="lesoes-comuns.html" class="article-card">
+                <h3>Lesões Comuns no Futebol: Prevenção Primária</h3>
+                <p>Conheça as lesões mais frequentes no futebol amador e aprenda técnicas de prevenção eficazes.</p>
+                <div class="meta">Leia em 4 min • Saúde</div>
+            </a>
+            
+            <!-- ARTIGO 10 -->
+            <a href="nutricao-esportiva.html" class="article-card">
+                <h3>Nutrição Esportiva: O Que Comer Antes e Depois</h3>
+                <p>Guia alimentar para jogadores amadores: o que consumir para ter energia e recuperação rápida.</p>
+                <div class="meta">Leia em 4 min • Nutrição</div>
+            </a>
+            
+            <!-- ARTIGO 11 -->
+            <a href="taticas-2-3-1.html" class="article-card">
+                <h3>Táticas 2-3-1 no Futebol Society</h3>
+                <p>Como implementar e jogar com o esquema tático 2-3-1, vantagens e posicionamento dos jogadores.</p>
+                <div class="meta">Leia em 3 min • Táticas</div>
+            </a>
+            
+            <!-- ARTIGO 12 -->
+            <a href="como-escolher-chuteira.html" class="article-card">
+                <h3>Como Escolher a Chuteira Certa para Cada Piso</h3>
+                <p>Guia definitivo para escolher chuteiras de acordo com o tipo de piso: grama natural, sintética ou cimento.</p>
+                <div class="meta">Leia em 3 min • Equipamentos</div>
+            </a>
+            
+            <!-- ARTIGO 13 -->
+            <a href="ciencia-sorteio.html" class="article-card">
+                <h3>A Ciência do Sorteio: Equilíbrio entre Times</h3>
+                <p>Algoritmos e métodos matemáticos para criar sorteios justos e times equilibrados em peladas.</p>
+                <div class="meta">Leia em 4 min • Ciência do Esporte</div>
+            </a>
+            
+            <!-- ARTIGO 14 -->
+            <a href="como-administrar-pelada.html" class="article-card">
+                <h3>Como Administrar uma Pelada pelo WhatsApp</h3>
+                <p>Passo a passo para organizar peladas usando WhatsApp: confirmações, pagamentos e comunicação eficiente.</p>
+                <div class="meta">Leia em 5 min • Organização</div>
+            </a>
+            
+        </div>
+        
+        <div style="background:#f0f8ff; padding:15px; border-radius:10px; margin-top:25px; border:1px dashed #3498db;">
+            <h4 style="color:#2980b9; margin-top:0;">📰 Mais Conteúdo em Breve!</h4>
+            <p style="font-size:13px; color:#555; margin-bottom:0;">
+                Nosso blog é atualizado semanalmente com novas dicas. Fique de olho para mais artigos sobre futebol amador!
+            </p>
+        </div>
+    </div>
+    
+    <footer>
+        <a href="index.html" style="color:var(--verde); text-decoration:none;">Página Inicial</a> • 
+        <a href="sitemap.xml" style="color:var(--verde); text-decoration:none;">Mapa do Site</a><br>
+        © 2026 Hora da Pelada - Blog de Dicas de Futebol
+    </footer>
+</div>
+
+<script>
+    // Script simples para melhorar experiência
+    document.addEventListener('DOMContentLoaded', function() {
+        // Adiciona contador de artigos
+        const articleCount = document.querySelectorAll('.article-card').length;
+        const subtitle = document.querySelector('.blog-subtitle');
+        subtitle.textContent = `${articleCount} artigos com dicas profissionais para melhorar sua pelada`;
+        
+        // Atualiza ano no footer
+        document.querySelector('footer').innerHTML = document.querySelector('footer').innerHTML.replace('2026', new Date().getFullYear());
+    });
+</script>
+
+</body>
+</html>
